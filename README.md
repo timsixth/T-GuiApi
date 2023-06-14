@@ -53,14 +53,19 @@ dependencies {
 	 </relocations>
         <filters>
             <filter>
-                <artifact>*:*</artifact>
-                <excludes>
-		     <exclude>pl/timsixth/gui/libray/GuiApiPlugin*</exclude>
-		     <exclude>pl/timsixth/gui/libray/example/ConfigFile*</exclude>
-		     <exclude>pl/timsixth/gui/libray/example/MenuManager*</exclude>
-		     <exclude>pl/timsixth/gui/libray/example/TestCommand*</exclude>
-                </excludes>
-            </filter>
+                 <artifact>com.github.timsixth:T-GuiApi</artifact>
+                   <includes>
+                      <include>pl/timsixth/gui/libray/listener/**.class</include>
+                      <include>pl/timsixth/gui/libray/model/**.class</include>
+                      <include>pl/timsixth/gui/libray/model/action/**.class</include>
+                      <include>pl/timsixth/gui/libray/model/action/click/**.class</include>
+                      <include>pl/timsixth/gui/libray/model/action/custom/impl/**.class</include>
+                      <include>pl/timsixth/gui/libray/model/action/custom/**.class</include>
+                      <include>pl/timsixth/gui/libray/model/action/exception/**.class</include>
+                      <include>pl/timsixth/gui/libray/manager/**.class</include>
+                      <include>pl/timsixth/gui/libray/util/**.class</include>
+                   </includes>
+           </filter>
         </filters>
     </configuration>
     <executions>
