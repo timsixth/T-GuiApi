@@ -57,8 +57,8 @@ dependencies {
                 <excludes>
 		     <exclude>pl/timsixth/gui/libray/GuiApiPlugin*</exclude>
 		     <exclude>pl/timsixth/gui/libray/example/ConfigFile*</exclude>
-		     <exclude>pl/timsixth/gui/libray/example/MenuManager</exclude>
-		     <exclude>pl/timsixth/gui/libray/example/TestCommand</exclude>
+		     <exclude>pl/timsixth/gui/libray/example/MenuManager*</exclude>
+		     <exclude>pl/timsixth/gui/libray/example/TestCommand*</exclude>
                 </excludes>
             </filter>
         </filters>
