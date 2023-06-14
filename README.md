@@ -11,30 +11,29 @@ https://github.com/timsixth/T-GuiApi/blob/main/src/main/resources/guis.yml
 ## Getting started
 
 # Maven
-```maven
-	<repositories>
-		<repository>
-		    <id>jitpack.io</id>
-		    <url>https://jitpack.io</url>
-		</repository>
-	</repositories>
+```xml
+<repositories>
+	<repository>
+	    <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+	</repository>
+</repositories>
   
-  <dependency>
-	    <groupId>com.github.timsixth</groupId>
-	    <artifactId>T-GuiApi</artifactId>
-	    <version>Tag</version>
-	</dependency>
+ <dependency>
+     <groupId>com.github.timsixth</groupId>
+     <artifactId>T-GuiApi</artifactId>
+     <version>Tag</version>
+ </dependency>
 ```
 # Gradle
 ```gradle
 allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
+	repositories {
+		maven { url 'https://jitpack.io' }
 	}
+}
 
 dependencies {
-	        implementation 'com.github.timsixth:T-GuiApi:Tag'
+    implementation 'com.github.timsixth:T-GuiApi:Tag'
 }
 ```
