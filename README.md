@@ -48,7 +48,7 @@ dependencies {
             <relocation>
                 <pattern>pl.timsixth.gui.libray</pattern>
                 <!-- Be sure to change the package below -->
-                <shadedPattern>my.plugin.utils</shadedPattern>
+                <shadedPattern>my.plugin.gui</shadedPattern>
             </relocation>
 	 </relocations>
         <filters>
