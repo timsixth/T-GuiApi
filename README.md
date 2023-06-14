@@ -37,3 +37,39 @@ dependencies {
     implementation 'com.github.timsixth:T-GuiApi:Tag'
 }
 ```
+# Shading
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-shade-plugin</artifactId>
+    <version>3.4.1</version>
+    <configuration>
+        <relocations>
+            <relocation>
+                <pattern>pl.timsixth.gui.libray</pattern>
+                <!-- Be sure to change the package below -->
+                <shadedPattern>my.plugin.utils</shadedPattern>
+            </relocation>
+	 </relocations>
+        <filters>
+            <filter>
+                <artifact>*:*</artifact>
+                <excludes>
+		     <exclude>pl/timsixth/gui/libray/GuiApiPlugin*</exclude>
+		     <exclude>pl/timsixth/gui/libray/example/ConfigFile*</exclude>
+		     <exclude>pl/timsixth/gui/libray/example/MenuManager</exclude>
+		     <exclude>pl/timsixth/gui/libray/example/TestCommand</exclude>
+                </excludes>
+            </filter>
+        </filters>
+    </configuration>
+    <executions>
+        <execution>
+            <phase>package</phase>
+            <goals>
+                <goal>shade</goal>
+            </goals>
+        </execution>
+    </executions>
+</plugin>
+```
