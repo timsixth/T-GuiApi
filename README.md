@@ -10,7 +10,7 @@ https://github.com/timsixth/T-GuiApi/blob/main/src/main/resources/guis.yml
 
 ## Getting started
 
-#Maven
+# Maven
 ```maven
 	<repositories>
 		<repository>
@@ -25,7 +25,7 @@ https://github.com/timsixth/T-GuiApi/blob/main/src/main/resources/guis.yml
 	    <version>Tag</version>
 	</dependency>
 ```
-#Gradle
+# Gradle
 ```gradle
 allprojects {
 		repositories {
