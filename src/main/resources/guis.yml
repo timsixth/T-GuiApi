@@ -1,0 +1,26 @@
+guis:
+  test:
+    displayname: '&a&lYours chests'
+    size: 54
+    empty_slots:
+      id: 7
+      material: STAINED_GLASS_PANE
+    slots:
+      22:
+        material: WOOL
+        id: 14
+        displayname: '&cList is empty2'
+        click_action:
+          type: 'GIVE_ITEMS'
+          args:
+            - ''
+          items:
+            DIAMOND:
+              amount: 1
+      21:
+        material: DIAMOND
+        displayname: '&cList is empty'
+        click_action:
+          type: 'SEND_MESSAGE'
+          args:
+            - '&aKOKOS'
