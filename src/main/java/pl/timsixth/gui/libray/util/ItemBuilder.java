@@ -246,18 +246,6 @@ public final class ItemBuilder {
         return this;
     }
 
-    /**
-     * Sets the dye color on an items.
-     * <b>* Notice that this doesn't check for items type, sets the literal data of the dyecolor as durability.</b>
-     *
-     * @param color The color to put.
-     */
-    @SuppressWarnings("deprecation")
-    public ItemBuilder setDyeColor(DyeColor color) {
-        this.is.setDurability(color.getData());
-        return this;
-    }
-
     public ItemBuilder setUnbreakable() {
         ItemMeta meta = is.getItemMeta();
         meta.spigot().setUnbreakable(true);

@@ -30,7 +30,7 @@ public abstract class AbstractMenuManager {
     private final ActionRegistration actionRegistration;
 
     @Getter
-    private final Set<Menu> menuSet = new HashSet<>();
+    private final Set<Menu> menus = new HashSet<>();
 
     public abstract void load();
 
@@ -61,7 +61,7 @@ public abstract class AbstractMenuManager {
             createMenuItem(menuItemSet, slotNumber, slot);
         }
         menu.setItems(menuItemSet);
-        menuSet.add(menu);
+        menus.add(menu);
     }
 
     private void createMenuItem(Set<MenuItem> menuItemSet, String slotNumber, ConfigurationSection slot) {
@@ -158,7 +158,7 @@ public abstract class AbstractMenuManager {
     }
 
     public Optional<Menu> getMenuByName(String name) {
-        return menuSet.stream().
+        return menus.stream().
                 filter(menu -> menu.getName().equalsIgnoreCase(name))
                 .findAny();
     }
