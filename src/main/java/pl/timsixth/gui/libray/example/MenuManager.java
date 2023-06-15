@@ -1,6 +1,5 @@
 package pl.timsixth.gui.libray.example;
 
-import pl.timsixth.gui.libray.example.ConfigFile;
 import pl.timsixth.gui.libray.manager.AbstractMenuManager;
 import pl.timsixth.gui.libray.manager.registration.ActionRegistration;
 

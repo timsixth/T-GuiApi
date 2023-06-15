@@ -6,6 +6,10 @@ import lombok.ToString;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Temple method of Action
+ * More information in {@link Action}
+ */
 @ToString
 @RequiredArgsConstructor
 public abstract class AbstractAction implements Action {

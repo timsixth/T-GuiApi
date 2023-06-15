@@ -1,10 +1,12 @@
 package pl.timsixth.gui.libray.manager.registration;
 
 import pl.timsixth.gui.libray.model.action.Action;
-import pl.timsixth.gui.libray.model.action.exception.ActionException;
 
 import java.util.*;
 
+/**
+ * Implementation of {@link ActionRegistration}
+ */
 public class ActionRegistrationImpl implements ActionRegistration {
 
     private final Map<String, Action> actions = new HashMap<>();
@@ -22,7 +24,7 @@ public class ActionRegistrationImpl implements ActionRegistration {
     @Override
     public void register(Action... actions) {
         if (actions.length == 0) {
-            throw new ActionException("You must add at least one action");
+            throw new IllegalStateException("You must add at least one action");
         }
 
         for (Action action : actions) {

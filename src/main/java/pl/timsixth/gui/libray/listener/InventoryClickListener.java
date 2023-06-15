@@ -26,7 +26,7 @@ public class InventoryClickListener implements Listener {
                     if (event.getSlot() == menuItem.getSlot()) {
                         if (menuItem.getAction() instanceof ClickAction) {
                             ClickAction clickAction = (ClickAction) menuItem.getAction();
-                            clickAction.handleClickEvent(event);
+                            clickAction.handleClickEvent(event, menuItem);
                         }
                     }
                 }

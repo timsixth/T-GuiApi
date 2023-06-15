@@ -32,8 +32,16 @@ public abstract class AbstractMenuManager {
     @Getter
     private final Set<Menu> menus = new HashSet<>();
 
+    /**
+     * Loads every guis
+     */
     public abstract void load();
 
+    /**
+     * Loads single gui from YAML
+     *
+     * @param yamlConfiguration the yamlConfiguration
+     */
     protected void load(YamlConfiguration yamlConfiguration) {
         ConfigurationSection guis = yamlConfiguration.getConfigurationSection("guis");
         for (String guiName : guis.getKeys(false)) {
@@ -53,6 +61,12 @@ public abstract class AbstractMenuManager {
         }
     }
 
+    /**
+     * Creates new menu from guiSection
+     *
+     * @param guiSection section to set slots
+     * @param menu       menu to create
+     */
     private void createMenu(ConfigurationSection guiSection, Menu menu) {
         ConfigurationSection slots = guiSection.getConfigurationSection("slots");
         Set<MenuItem> menuItemSet = new HashSet<>();
@@ -64,24 +78,37 @@ public abstract class AbstractMenuManager {
         menus.add(menu);
     }
 
-    private void createMenuItem(Set<MenuItem> menuItemSet, String slotNumber, ConfigurationSection slot) {
+    /**
+     * Creates new menu item
+     *
+     * @param menuItemSet menuItems
+     * @param slotNumber  slot to set menuItem
+     * @param slotSection slot section
+     */
+    private void createMenuItem(Set<MenuItem> menuItemSet, String slotNumber, ConfigurationSection slotSection) {
         MenuItem menuItem = new MenuItem(
                 Integer.parseInt(slotNumber),
-                Material.getMaterial(slot.getString("material")),
-                slot.getString("displayname"),
-                slot.getStringList("lore")
+                Material.getMaterial(slotSection.getString("material")),
+                slotSection.getString("displayname"),
+                slotSection.getStringList("lore")
         );
-        setPrice(slot, menuItem);
-        setEnchants(slot, menuItem);
-        setMaterialDataId(slot, menuItem);
-        setAction(slot, menuItem);
+        setPrice(slotSection, menuItem);
+        setEnchants(slotSection, menuItem);
+        setMaterialDataId(slotSection, menuItem);
+        setAction(slotSection, menuItem);
 
         menuItemSet.add(menuItem);
     }
 
-    private void setAction(ConfigurationSection slot, MenuItem menuItem) {
-        if (slot.getConfigurationSection("click_action") != null) {
-            ConfigurationSection clickActionSection = slot.getConfigurationSection("click_action");
+    /**
+     * Sets click action on {@link MenuItem}
+     *
+     * @param slotSection slot section
+     * @param menuItem    menuItem to set action
+     */
+    private void setAction(ConfigurationSection slotSection, MenuItem menuItem) {
+        if (slotSection.getConfigurationSection("click_action") != null) {
+            ConfigurationSection clickActionSection = slotSection.getConfigurationSection("click_action");
 
             String name = clickActionSection.getString("type");
 
@@ -112,6 +139,12 @@ public abstract class AbstractMenuManager {
         }
     }
 
+    /**
+     * Sets items to give when it exists
+     *
+     * @param clickActionSection action section
+     * @return set click action
+     */
     private ClickAction setItemsToGive(ConfigurationSection clickActionSection) {
         if (clickActionSection.getConfigurationSection("items") == null) return new NoneClickAction();
 
@@ -138,12 +171,24 @@ public abstract class AbstractMenuManager {
         return giveItemsAction;
     }
 
+    /**
+     * Sets price of {@link MenuItem}
+     *
+     * @param slot     slot section
+     * @param menuItem menuItem to set price
+     */
     private void setPrice(ConfigurationSection slot, MenuItem menuItem) {
         if (slot.getInt("price") != 0) {
             menuItem.setPrice(slot.getInt("price"));
         }
     }
 
+    /**
+     * Sets enchants to {@link MenuItem}
+     *
+     * @param slot     slot section
+     * @param menuItem menuItem to set enchants
+     */
     private void setEnchants(ConfigurationSection slot, MenuItem menuItem) {
         if (slot.getStringList("enchants") != null) {
             Map<Enchantment, Integer> enchantments = ItemUtil.getEnchantments(slot.getStringList("enchants"));
@@ -151,18 +196,36 @@ public abstract class AbstractMenuManager {
         }
     }
 
+    /**
+     * Sets material data id Important on 1.8-1.12
+     *
+     * @param slot     slot section
+     * @param menuItem menuItem to set material data id
+     */
     private void setMaterialDataId(ConfigurationSection slot, MenuItem menuItem) {
         if (slot.getInt("id") != 0) {
             menuItem.setMaterialDataId(slot.getInt("id"));
         }
     }
 
+    /**
+     * Gets {@link Menu} by name
+     *
+     * @param name menu name
+     * @return Optional of Menu
+     */
     public Optional<Menu> getMenuByName(String name) {
         return menus.stream().
                 filter(menu -> menu.getName().equalsIgnoreCase(name))
                 .findAny();
     }
 
+    /**
+     * Generates inventory based on {@link Menu}
+     *
+     * @param menu menu to generate inventory
+     * @return generated inventory
+     */
     public Inventory createMenu(Menu menu) {
         Inventory inv = Bukkit.createInventory(null, menu.getSize(), ChatUtil.chatColor(menu.getDisplayName()));
 

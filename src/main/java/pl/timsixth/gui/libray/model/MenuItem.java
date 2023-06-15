@@ -10,6 +10,10 @@ import pl.timsixth.gui.libray.model.action.Action;
 
 import java.util.List;
 import java.util.Map;
+
+/**
+ * Represents one item in Menu
+ */
 @RequiredArgsConstructor
 @Getter
 @Setter

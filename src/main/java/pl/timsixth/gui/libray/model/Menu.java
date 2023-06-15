@@ -7,6 +7,9 @@ import lombok.Setter;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Represents one menu
+ */
 @RequiredArgsConstructor
 @Getter
 public class Menu {
