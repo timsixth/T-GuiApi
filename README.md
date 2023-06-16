@@ -86,11 +86,9 @@ public final class MyPlugin extends JavaPlugin {
     public void onEnable() {
         ConfigFile configFile = new ConfigFile(this);
         ActionRegistration actionRegistration = new ActionRegistrationImpl(); //create new instance of ActionRegistration
-        actionRegistration.register(new NoneClickAction(), new SendMessageAction(), new GiveItemsActionImpl()); //register action
+        actionRegistration.register(new NoneClickAction(), new SendMessageAction(), new GiveItemsActionImpl()); //register actions
         AbstractMenuManager menuManager = new MenuManager(actionRegistration, configFile);
         menuManager.load(); //load every gui file
         Bukkit.getPluginManager().registerEvents(new InventoryClickListener(menuManager), this); //register listener
-
     } 
-
 ```
