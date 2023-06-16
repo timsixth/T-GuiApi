@@ -78,3 +78,19 @@ dependencies {
     </executions>
 </plugin>
 ```
+# Configure plugin 
+```java
+public final class MyPlugin extends JavaPlugin {
+
+    @Override
+    public void onEnable() {
+        ConfigFile configFile = new ConfigFile(this);
+        ActionRegistration actionRegistration = new ActionRegistrationImpl(); //create new instance of ActionRegistration
+        actionRegistration.register(new NoneClickAction(), new SendMessageAction(), new GiveItemsActionImpl()); //register action
+        AbstractMenuManager menuManager = new MenuManager(actionRegistration, configFile);
+        menuManager.load(); //load every gui file
+        Bukkit.getPluginManager().registerEvents(new InventoryClickListener(menuManager), this); //register listener
+
+    } 
+
+```
