@@ -62,6 +62,7 @@ dependencies {
                       <include>pl/timsixth/gui/libray/model/action/custom/impl/**.class</include>
                       <include>pl/timsixth/gui/libray/model/action/custom/**.class</include>
                       <include>pl/timsixth/gui/libray/manager/**.class</include>
+		      <include>pl/timsixth/gui/libray/manager/registration/**.class</include>
                       <include>pl/timsixth/gui/libray/util/**.class</include>
                    </includes>
            </filter>
