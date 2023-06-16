@@ -1,6 +1,6 @@
 ## T-GuiApi is a simple library to create custom GUI in minecraft plugins.
 
-Gui is generating from .yml.
+Gui is generating from YAML files.
 This library is using in my plugins.
 
 ## Examples
