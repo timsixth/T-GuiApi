@@ -165,12 +165,10 @@ guis: #every gui file must have guis section
     displayname: '&a&lYours chests' #display name of gui name
     size: 54 #size
     empty_slots: #set empty slot filling 
-      id: 7 #id of glass (on 1.8.8 to 1.12.2) is it important but the plugin doesn't support these version. 
-      material: STAINED_GLASS_PANE #on 1.13.2 you can use BLACK_STAINED_GLASS_PANE and set id to 0 (Not tested yet)
+      material: BLACK_STAINED_GLASS_PANE #material name
     slots: #slots section
       22: #slot number
         material: RED_WOOL #material name
-        id: 14 #material id
         displayname: '&cList is empty2' #item displayName
         click_action: #click actiom
           type: 'GIVE_ITEMS' #name of action
