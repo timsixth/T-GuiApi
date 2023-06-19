@@ -27,5 +27,4 @@ public class MenuItem {
     private Map<Enchantment, Integer> enchantments;
     private Action action;
     private int price;
-    private int materialDataId;
 }

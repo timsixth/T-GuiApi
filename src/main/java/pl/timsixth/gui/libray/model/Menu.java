@@ -3,6 +3,7 @@ package pl.timsixth.gui.libray.model;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,6 +13,7 @@ import java.util.Set;
  */
 @RequiredArgsConstructor
 @Getter
+@ToString
 public class Menu {
 
     private final int size;

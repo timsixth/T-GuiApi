@@ -2,6 +2,7 @@ package pl.timsixth.gui.libray.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.bukkit.Material;
 
 /**
@@ -9,9 +10,9 @@ import org.bukkit.Material;
  */
 @RequiredArgsConstructor
 @Getter
+@ToString
 public class EmptySlotFilling {
 
-    private final int emptySlotId;
     private final Material emptySlotMaterial;
 
 }

@@ -53,7 +53,6 @@ public abstract class AbstractMenuManager {
                 ConfigurationSection emptySlots = guiSection.getConfigurationSection("empty_slots");
                 Menu menu = new Menu(guiSection.getInt("size"), guiName, guiSection.getString("displayname"),
                         new EmptySlotFilling(
-                                emptySlots.getInt("id"),
                                 Material.getMaterial(emptySlots.getString("material"))
                         ));
                 createMenu(guiSection, menu);
@@ -94,7 +93,6 @@ public abstract class AbstractMenuManager {
         );
         setPrice(slotSection, menuItem);
         setEnchants(slotSection, menuItem);
-        setMaterialDataId(slotSection, menuItem);
         setAction(slotSection, menuItem);
 
         menuItemSet.add(menuItem);
@@ -156,11 +154,11 @@ public abstract class AbstractMenuManager {
             ItemStack item = new ItemBuilder(new ItemStack(Material.getMaterial(materialName), materialSection.getInt("amount"))).toItemStack();
 
             if (materialSection.getInt("id") != 0) {
-                item = new ItemBuilder(new ItemStack(Material.getMaterial(materialName), materialSection.getInt("amount"), (short) materialSection.getInt("id"))).toItemStack();
+                item = new ItemBuilder(new ItemStack(Material.getMaterial(materialName), materialSection.getInt("amount"))).toItemStack();
             }
             if (materialSection.getStringList("enchants") != null) {
                 Map<Enchantment, Integer> enchantments = ItemUtil.getEnchantments(materialSection.getStringList("enchants"));
-                item = new ItemBuilder(new ItemStack(Material.getMaterial(materialName), materialSection.getInt("amount"), (short) materialSection.getInt("id")))
+                item = new ItemBuilder(new ItemStack(Material.getMaterial(materialName), materialSection.getInt("amount")))
                         .addEnchantments(enchantments)
                         .toItemStack();
             }
@@ -197,18 +195,6 @@ public abstract class AbstractMenuManager {
     }
 
     /**
-     * Sets material data id Important on 1.8-1.12
-     *
-     * @param slot     slot section
-     * @param menuItem menuItem to set material data id
-     */
-    private void setMaterialDataId(ConfigurationSection slot, MenuItem menuItem) {
-        if (slot.getInt("id") != 0) {
-            menuItem.setMaterialDataId(slot.getInt("id"));
-        }
-    }
-
-    /**
      * Gets {@link Menu} by name
      *
      * @param name menu name
@@ -231,7 +217,7 @@ public abstract class AbstractMenuManager {
 
         if (menu.getEmptySlotFilling() != null) {
             for (int i = 0; i < menu.getSize(); i++) {
-                inv.setItem(i, new ItemStack(menu.getEmptySlotFilling().getEmptySlotMaterial(), 1, (short) menu.getEmptySlotFilling().getEmptySlotId()));
+                inv.setItem(i, new ItemStack(menu.getEmptySlotFilling().getEmptySlotMaterial(), 1));
             }
         }
 
@@ -241,21 +227,13 @@ public abstract class AbstractMenuManager {
             for (String line : lore) {
                 replaceLore.add(line.replace("{PRICE}", String.valueOf(menuItem.getPrice())));
             }
-            if (menuItem.getMaterialDataId() == 0) {
+
                 inv.setItem(menuItem.getSlot(), new ItemBuilder(new ItemStack(menuItem.getMaterial(), 1))
                         .setLore(ChatUtil.chatColor(replaceLore))
                         .setName(ChatUtil.chatColor(menuItem.getDisplayName()))
                         .addEnchantments(menuItem.getEnchantments())
                         .toItemStack()
                 );
-            } else {
-                inv.setItem(menuItem.getSlot(), new ItemBuilder(new ItemStack(menuItem.getMaterial(), 1, (short) menuItem.getMaterialDataId()))
-                        .setLore(ChatUtil.chatColor(replaceLore))
-                        .setName(ChatUtil.chatColor(menuItem.getDisplayName()))
-                        .addEnchantments(menuItem.getEnchantments())
-                        .toItemStack()
-                );
-            }
         }
         return inv;
     }
