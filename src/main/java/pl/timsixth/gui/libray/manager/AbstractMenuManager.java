@@ -14,9 +14,8 @@ import pl.timsixth.gui.libray.model.EmptySlotFilling;
 import pl.timsixth.gui.libray.model.Menu;
 import pl.timsixth.gui.libray.model.MenuItem;
 import pl.timsixth.gui.libray.model.action.Action;
+import pl.timsixth.gui.libray.model.action.SectionAction;
 import pl.timsixth.gui.libray.model.action.click.ClickAction;
-import pl.timsixth.gui.libray.model.action.custom.GiveItemsAction;
-import pl.timsixth.gui.libray.model.action.custom.impl.GiveItemsActionImpl;
 import pl.timsixth.gui.libray.model.action.custom.impl.NoneClickAction;
 import pl.timsixth.gui.libray.util.ChatUtil;
 import pl.timsixth.gui.libray.util.ItemBuilder;
@@ -118,10 +117,11 @@ public abstract class AbstractMenuManager {
 
             ClickAction action = (ClickAction) actionOptional.get();
 
-            if (action instanceof GiveItemsAction) {
-                ClickAction giveItemsClickAction = setItemsToGive(clickActionSection);
-                menuItem.setAction(giveItemsClickAction);
-                return;
+            if (action instanceof SectionAction) {
+                if (enableSectionActions()) {
+                    addSectionActions(slotSection, menuItem, action);
+                    return;
+                }
             }
 
             ClickAction clickAction;
@@ -135,38 +135,6 @@ public abstract class AbstractMenuManager {
 
             menuItem.setAction(clickAction);
         }
-    }
-
-    /**
-     * Sets items to give when it exists
-     *
-     * @param clickActionSection action section
-     * @return set click action
-     */
-    private ClickAction setItemsToGive(ConfigurationSection clickActionSection) {
-        if (clickActionSection.getConfigurationSection("items") == null) return new NoneClickAction();
-
-        GiveItemsAction giveItemsAction = new GiveItemsActionImpl();
-        ConfigurationSection itemsSection = clickActionSection.getConfigurationSection("items");
-        List<ItemStack> items = new ArrayList<>();
-        for (String materialName : itemsSection.getKeys(false)) {
-            ConfigurationSection materialSection = itemsSection.getConfigurationSection(materialName);
-            ItemStack item = new ItemBuilder(new ItemStack(Material.getMaterial(materialName), materialSection.getInt("amount"))).toItemStack();
-
-            if (materialSection.getInt("id") != 0) {
-                item = new ItemBuilder(new ItemStack(Material.getMaterial(materialName), materialSection.getInt("amount"))).toItemStack();
-            }
-            if (materialSection.getStringList("enchants") != null) {
-                Map<Enchantment, Integer> enchantments = ItemUtil.getEnchantments(materialSection.getStringList("enchants"));
-                item = new ItemBuilder(new ItemStack(Material.getMaterial(materialName), materialSection.getInt("amount")))
-                        .addEnchantments(enchantments)
-                        .toItemStack();
-            }
-            items.add(item);
-        }
-        giveItemsAction.setItems(items);
-
-        return giveItemsAction;
     }
 
     /**
@@ -222,19 +190,38 @@ public abstract class AbstractMenuManager {
         }
 
         for (MenuItem menuItem : menu.getItems()) {
-            List<String> lore = menuItem.getLore();
             List<String> replaceLore = new ArrayList<>();
-            for (String line : lore) {
+            for (String line : menuItem.getLore()) {
                 replaceLore.add(line.replace("{PRICE}", String.valueOf(menuItem.getPrice())));
             }
 
-                inv.setItem(menuItem.getSlot(), new ItemBuilder(new ItemStack(menuItem.getMaterial(), 1))
-                        .setLore(ChatUtil.chatColor(replaceLore))
-                        .setName(ChatUtil.chatColor(menuItem.getDisplayName()))
-                        .addEnchantments(menuItem.getEnchantments())
-                        .toItemStack()
-                );
+            inv.setItem(menuItem.getSlot(), new ItemBuilder(new ItemStack(menuItem.getMaterial(), 1))
+                    .setLore(ChatUtil.chatColor(replaceLore))
+                    .setName(ChatUtil.chatColor(menuItem.getDisplayName()))
+                    .addEnchantments(menuItem.getEnchantments())
+                    .toItemStack()
+            );
         }
         return inv;
+    }
+
+    /**
+     * Enables section actions
+     *
+     * @return true if enabled, otherwise not enabled
+     */
+    protected boolean enableSectionActions() {
+        return false;
+    }
+
+    /**
+     * Adds custom section-actions
+     *
+     * @param slotSection slot section
+     * @param menuItem    menuItem to set action
+     * @param action      action from YAML
+     */
+    protected void addSectionActions(ConfigurationSection slotSection, MenuItem menuItem, ClickAction action) {
+        throw new UnsupportedOperationException("Not implemented");
     }
 }

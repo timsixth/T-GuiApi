@@ -3,12 +3,10 @@ guis:
     displayname: '&a&lYours chests'
     size: 54
     empty_slots:
-      id: 7
-      material: STAINED_GLASS_PANE
+      material: BLACK_STAINED_GLASS_PANE
     slots:
       22:
-        material: WOOL
-        id: 14
+        material: RED_WOOL
         displayname: '&cList is empty2'
         click_action:
           type: 'GIVE_ITEMS'

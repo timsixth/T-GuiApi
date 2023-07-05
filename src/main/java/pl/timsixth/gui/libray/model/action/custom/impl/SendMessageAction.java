@@ -21,7 +21,7 @@ public class SendMessageAction extends AbstractAction implements ClickAction {
     public void handleClickEvent(InventoryClickEvent event, MenuItem menuItem) {
         Player player = (Player) event.getWhoClicked();
 
-        sendMessage(player,getMessage());
+        player.sendMessage(getMessage());
 
         event.setCancelled(true);
     }
@@ -31,9 +31,5 @@ public class SendMessageAction extends AbstractAction implements ClickAction {
         }
 
         return ChatUtil.chatColor(getArgs().get(0));
-    }
-
-    private void sendMessage(Player player,String message) {
-        player.sendMessage(message);
     }
 }
