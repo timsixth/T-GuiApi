@@ -174,7 +174,7 @@ guis: #every gui file must have guis section
           type: 'GIVE_ITEMS' #name of action
           args: #args
             - ''
-          items: #items top give 
+          items: #items to give 
             DIAMOND: #material name 
               amount: 1 #amount
       21:
