@@ -5,6 +5,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import pl.timsixth.gui.libray.manager.AbstractMenuManager;
+import pl.timsixth.gui.libray.manager.YAMLMenuManager;
 import pl.timsixth.gui.libray.manager.registration.ActionRegistration;
 import pl.timsixth.gui.libray.model.MenuItem;
 import pl.timsixth.gui.libray.model.action.click.ClickAction;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MenuManager extends AbstractMenuManager {
+public class MenuManager extends YAMLMenuManager {
 
     private final ConfigFile configFile;
 
