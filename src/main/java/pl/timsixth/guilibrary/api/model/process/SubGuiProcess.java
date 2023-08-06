@@ -21,4 +21,6 @@ public interface SubGuiProcess extends GuiProcess {
     void setPreviousProcess(SubGuiProcess nextProcess);
 
     void setNextProcess(SubGuiProcess previousProcess);
+
+    String getInventoryDisplayName();
 }

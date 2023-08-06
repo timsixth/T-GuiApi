@@ -1,6 +1,8 @@
 package pl.timsixth.guilibrary.api.model.process.impl;
 
+import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.inventory.Inventory;
 import pl.timsixth.guilibrary.api.model.process.SubGuiProcess;
 
 import java.util.HashMap;
@@ -11,6 +13,8 @@ public abstract class AbstractSubGuiProcess extends AbstractGuiProcess implement
     private SubGuiProcess nextProcess;
     private SubGuiProcess previousProcess;
     private final Map<String, Object> transformedData;
+    @Getter
+    private Inventory inventory;
 
     public AbstractSubGuiProcess(String name) {
         super(name);

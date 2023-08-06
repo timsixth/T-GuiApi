@@ -1,6 +1,5 @@
 package pl.timsixth.guilibrary.api.model.action;
 
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import java.util.ArrayList;
@@ -11,12 +10,22 @@ import java.util.List;
  * More information in {@link Action}
  */
 @ToString
-@RequiredArgsConstructor
 public abstract class AbstractAction implements Action {
 
     private final String name;
     private final ActionType actionType;
     private List<String> args;
+
+    public AbstractAction(String name, ActionType actionType) {
+        this.name = name;
+        this.actionType = actionType;
+    }
+
+    public AbstractAction(String name) {
+        this.name = name;
+        this.actionType = ActionType.CLICK;
+    }
+
     @Override
     public ActionType getActionType() {
         return actionType;

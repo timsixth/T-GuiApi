@@ -1,15 +1,15 @@
 package pl.timsixth.guilibrary.example;
 
 import lombok.RequiredArgsConstructor;
-import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.Inventory;
+import pl.timsixth.guilibrary.GuiApiPlugin;
 import pl.timsixth.guilibrary.api.manager.AbstractMenuManager;
+import pl.timsixth.guilibrary.api.manager.process.ProcessRunner;
 import pl.timsixth.guilibrary.api.model.Menu;
+import pl.timsixth.guilibrary.example.process.CreateUserProcess;
 
 import java.util.Optional;
 
@@ -17,6 +17,7 @@ import java.util.Optional;
 public class TestCommand implements CommandExecutor {
 
     private final AbstractMenuManager menuManager;
+    private final GuiApiPlugin guiApiPlugin;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -32,10 +33,8 @@ public class TestCommand implements CommandExecutor {
         } else if (args.length == 1) {
             if (args[0].equalsIgnoreCase("memory_gui")) {
                 player.openInventory(menuManager.createMenu(menuManager.getMenuByName("in_memory_gui").get()));
-            } else if (args[0].equalsIgnoreCase("anvil")) {
-                Inventory inventory = Bukkit.createInventory(null, InventoryType.ANVIL);
-
-                player.openInventory(inventory);
+            } else if (args[0].equalsIgnoreCase("process")) {
+                ProcessRunner.runProcess(player, new CreateUserProcess(menuManager, guiApiPlugin));
             }
         }
 

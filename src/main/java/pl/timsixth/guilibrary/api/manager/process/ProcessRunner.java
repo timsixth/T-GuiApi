@@ -4,6 +4,7 @@ import lombok.Getter;
 import org.bukkit.entity.Player;
 import pl.timsixth.guilibrary.api.model.process.MainGuiProcess;
 import pl.timsixth.guilibrary.api.model.process.SubGuiProcess;
+import pl.timsixth.guilibrary.api.model.process.input.WriteableInput;
 
 import java.util.*;
 
@@ -11,8 +12,7 @@ import java.util.*;
 public final class ProcessRunner {
     private static final Map<UUID, MainGuiProcess> processes = new HashMap<>();
 
-    private ProcessRunner() {
-    }
+    private ProcessRunner() {}
 
     public static void runProcess(Player player, MainGuiProcess mainGuiProcess) {
         List<SubGuiProcess> subGuiProcesses = configureSubProcesses(mainGuiProcess.getGuiProcesses());
@@ -22,24 +22,22 @@ public final class ProcessRunner {
         processes.put(player.getUniqueId(), mainGuiProcess);
 
         runSubProcess(player, subGuiProcesses.get(0));
-
-        mainGuiProcess.setEnded(true);
-        processes.remove(player.getUniqueId());
     }
 
-    private static void runSubProcess(Player player, SubGuiProcess subGuiProcess) {
+    public static void runSubProcess(Player player, SubGuiProcess subGuiProcess) {
         if (subGuiProcess.isEnded()) return;
         if (subGuiProcess.isCanceled()) return;
 
         subGuiProcess.setStarted(true);
 
-        player.openInventory(subGuiProcess.getInventory());
+        if (subGuiProcess instanceof WriteableInput) {
+            WriteableInput writeable = (WriteableInput) subGuiProcess;
 
-        if (subGuiProcess.isEnded()) {
-            if (subGuiProcess.nextProcess() == null) return;
-
-            runSubProcess(player, subGuiProcess.nextProcess());
+            writeable.getAnvilInput().open(player);
+            return;
         }
+
+        player.openInventory(subGuiProcess.getInventory());
     }
 
     private static List<SubGuiProcess> configureSubProcesses(List<SubGuiProcess> subGuiProcessList) {
@@ -70,6 +68,11 @@ public final class ProcessRunner {
         }
 
         return subGuiProcesses;
+    }
+
+    public static void endProcess(Player player, MainGuiProcess mainGuiProcess) {
+        mainGuiProcess.setEnded(true);
+        processes.remove(player.getUniqueId());
     }
 
     public static MainGuiProcess getCurrentUserProcess(Player player) {
