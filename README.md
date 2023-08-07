@@ -4,7 +4,7 @@ Gui is generating from YAML files.
 This library is using in my plugins.
 
 ## Examples
-https://github.com/timsixth/T-GuiApi/tree/main/example-plugin/src/main/java/pl/timsixth/guilibrary/example)<br>
+https://github.com/timsixth/T-GuiApi/tree/main/example-plugin/src/main/java/pl/timsixth/guilibrary/example<br>
 https://github.com/timsixth/T-GuiApi/blob/main/example-plugin/src/main/resources/guis.yml
 ## Features
 * Generating GUI's from YAML files.
