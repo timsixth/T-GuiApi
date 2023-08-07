@@ -49,7 +49,7 @@ public final class ProcessRunner {
         if (subGuiProcess instanceof WriteableInput) {
             WriteableInput writeable = (WriteableInput) subGuiProcess;
 
-           // writeable.getAnvilInput().open(player);
+            writeable.getAnvilInput().open(player);
             return;
         }
 

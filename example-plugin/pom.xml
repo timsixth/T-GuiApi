@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>example-plugin</artifactId>
+    <name>T-GuiApiPlugin</name>
     <dependencies>
         <dependency>
             <groupId>pl.timsixth</groupId>
@@ -28,6 +29,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>${project.name}-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
