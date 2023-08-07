@@ -5,9 +5,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import pl.timsixth.guilibrary.api.manager.AbstractMenuManager;
-import pl.timsixth.guilibrary.api.manager.ProcessRunner;
-import pl.timsixth.guilibrary.api.model.Menu;
+import pl.timsixth.guilibrary.core.manager.AbstractMenuManager;
+import pl.timsixth.guilibrary.processes.manager.ProcessRunner;
+import pl.timsixth.guilibrary.core.model.Menu;
 import pl.timsixth.guilibrary.example.GuiApiPlugin;
 import pl.timsixth.guilibrary.example.process.CreateUserProcess;
 

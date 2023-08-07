@@ -1,9 +1,9 @@
 package pl.timsixth.guilibrary.example.process;
 
 import org.bukkit.inventory.Inventory;
-import pl.timsixth.guilibrary.api.manager.AbstractMenuManager;
-import pl.timsixth.guilibrary.api.model.Menu;
-import pl.timsixth.guilibrary.api.model.impl.AbstractSubGuiProcess;
+import pl.timsixth.guilibrary.core.manager.AbstractMenuManager;
+import pl.timsixth.guilibrary.core.model.Menu;
+import pl.timsixth.guilibrary.processes.model.impl.AbstractSubGuiProcess;
 
 public class ChooseUserGroupSubProcess extends AbstractSubGuiProcess {
 

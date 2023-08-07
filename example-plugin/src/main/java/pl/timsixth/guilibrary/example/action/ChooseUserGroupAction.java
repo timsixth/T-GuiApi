@@ -2,12 +2,12 @@ package pl.timsixth.guilibrary.example.action;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import pl.timsixth.guilibrary.api.manager.ProcessRunner;
-import pl.timsixth.guilibrary.api.model.MenuItem;
-import pl.timsixth.guilibrary.api.model.action.AbstractAction;
-import pl.timsixth.guilibrary.api.model.action.click.ClickAction;
-import pl.timsixth.guilibrary.api.model.MainGuiProcess;
-import pl.timsixth.guilibrary.api.model.SubGuiProcess;
+import pl.timsixth.guilibrary.processes.manager.ProcessRunner;
+import pl.timsixth.guilibrary.core.model.MenuItem;
+import pl.timsixth.guilibrary.core.model.action.AbstractAction;
+import pl.timsixth.guilibrary.core.model.action.click.ClickAction;
+import pl.timsixth.guilibrary.processes.model.MainGuiProcess;
+import pl.timsixth.guilibrary.processes.model.SubGuiProcess;
 import pl.timsixth.guilibrary.example.model.Group;
 import pl.timsixth.guilibrary.example.model.User;
 

@@ -1,8 +1,8 @@
 package pl.timsixth.guilibrary.example.process;
 
 import pl.timsixth.guilibrary.example.GuiApiPlugin;
-import pl.timsixth.guilibrary.api.manager.AbstractMenuManager;
-import pl.timsixth.guilibrary.api.model.impl.AbstractMainGuiProcess;
+import pl.timsixth.guilibrary.core.manager.AbstractMenuManager;
+import pl.timsixth.guilibrary.processes.model.impl.AbstractMainGuiProcess;
 
 public class CreateUserProcess extends AbstractMainGuiProcess {
 

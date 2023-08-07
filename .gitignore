@@ -5,3 +5,5 @@
 /example-plugin.iml
 /dependency-reduced-pom.xml
 /core.iml
+/processes.iml
+/example-plugin/dependency-reduced-pom.xml

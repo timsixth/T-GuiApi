@@ -3,11 +3,11 @@ package pl.timsixth.guilibrary.example.process;
 import net.wesjd.anvilgui.AnvilGUI;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import pl.timsixth.guilibrary.core.util.ChatUtil;
 import pl.timsixth.guilibrary.example.GuiApiPlugin;
-import pl.timsixth.guilibrary.api.manager.ProcessRunner;
-import pl.timsixth.guilibrary.api.model.impl.AbstractSubGuiProcess;
-import pl.timsixth.guilibrary.api.model.input.WriteableInput;
-import pl.timsixth.guilibrary.api.util.ChatUtil;
+import pl.timsixth.guilibrary.processes.manager.ProcessRunner;
+import pl.timsixth.guilibrary.processes.model.impl.AbstractSubGuiProcess;
+import pl.timsixth.guilibrary.processes.model.input.WriteableInput;
 
 import java.util.Arrays;
 import java.util.Collections;

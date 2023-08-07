@@ -21,7 +21,68 @@
             <artifactId>processes</artifactId>
             <version>2.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>net.wesjd</groupId>
+            <artifactId>anvilgui</artifactId>
+            <version>1.7.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <relocations>
+                                <relocation>
+                                    <pattern>net.wesjd.anvilgui</pattern>
+                                    <shadedPattern>pl.timsixth.guilibrary.example.anvilgui</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>pl.timsixth.guilibrary.core</pattern>
+                                    <shadedPattern>pl.timsixth.guilibrary.example.core</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>pl.timsixth.guilibrary.processes</pattern>
+                                    <shadedPattern>pl.timsixth.guilibrary.example.processes</shadedPattern>
+                                </relocation>
+                            </relocations>
+                            <filters>
+                                <filter>
+                                    <artifact>net.wesjd.anvilgui:anvilgui</artifact>
+                                    <excludeDefaults>false</excludeDefaults>
+                                    <includes>
+                                        <include>pl.timsixth.guilibrary.example.anvilgui</include>
+                                    </includes>
+                                </filter>
+                                <filter>
+                                    <artifact>pl.timsixth:core</artifact>
+                                    <excludeDefaults>false</excludeDefaults>
+                                    <includes>
+                                        <include>pl.timsixth.guilibrary.example.core</include>
+                                    </includes>
+                                </filter>
+                                <filter>
+                                    <artifact>pl.timsixth:processes</artifact>
+                                    <excludeDefaults>false</excludeDefaults>
+                                    <includes>
+                                        <include>pl.timsixth.guilibrary.example.processes</include>
+                                    </includes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
