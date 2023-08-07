@@ -4,10 +4,10 @@ Gui is generating from YAML files.
 This library is using in my plugins.
 
 ## Examples
-https://github.com/timsixth/T-GuiApi/tree/main/src/main/java/pl/timsixth/gui/libray/example
-<br>
-https://github.com/timsixth/T-GuiApi/blob/main/src/main/resources/guis.yml
-
+[https://github.com/timsixth/T-GuiApi/tree/main/src/main/java/pl/timsixth/gui/libray/example
+](https://github.com/timsixth/T-GuiApi/tree/main/example-plugin/src/main/java/pl/timsixth/guilibrary/example)<br>
+[https://github.com/timsixth/T-GuiApi/blob/main/src/main/resources/guis.yml
+](https://github.com/timsixth/T-GuiApi/blob/main/example-plugin/src/main/resources/guis.yml)
 ## Features
 * Generating GUI's from YAML files.
 * Two options of GUI storage - InMemory (Default) or InYAML
