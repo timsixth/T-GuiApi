@@ -1,7 +1,0 @@
-name: T-GuiApiPlugin
-main: pl.timsixth.gui.libray.GuiApiPlugin
-version: '1.2.1'
-author: timsixth
-api-version: 1.13
-commands:
-  test:
