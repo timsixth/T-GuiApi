@@ -2,3 +2,6 @@
 /target/
 /T-GuiApi.iml
 /.idea/
+/example-plugin.iml
+/dependency-reduced-pom.xml
+/core.iml

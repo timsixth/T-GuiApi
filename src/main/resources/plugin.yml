@@ -1,7 +1,0 @@
-name: T-GuiApi
-main: pl.timsixth.guilibrary.GuiApiPlugin
-version: '2.0-alpha'
-author: timsixth
-api-version: 1.13
-commands:
-  test:
