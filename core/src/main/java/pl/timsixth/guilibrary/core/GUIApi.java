@@ -30,7 +30,7 @@ public final class GUIApi {
     /**
      * In this constructor GUIApi initializes.
      * registerListeners method calls in constructor.
-     * Sets default values to menuManager and actionRegistration fields.<br/>
+     * Sets default values to menuManager and actionRegistration fields.
      * Default value for menuManager is {@link InMemoryMenuManager}
      *
      * @param plugin given plugin which uses this library

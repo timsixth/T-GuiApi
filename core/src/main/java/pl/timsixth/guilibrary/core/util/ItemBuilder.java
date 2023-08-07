@@ -75,6 +75,7 @@ public final class ItemBuilder {
      * Change the durability of the items.
      *
      * @param dur The durability to set it to.
+     * @return ItemBuilder
      */
     public ItemBuilder setDurability(short dur) {
         is.setDurability(dur);
@@ -85,6 +86,7 @@ public final class ItemBuilder {
      * Set the displayname of the items.
      *
      * @param name The name to change it to.
+     * @return ItemBuilder
      */
     public ItemBuilder setName(String name) {
         ItemMeta im = is.getItemMeta();
@@ -98,6 +100,7 @@ public final class ItemBuilder {
      *
      * @param ench  The enchantment to add.
      * @param level The level to put the enchant on.
+     * @return ItemBuilder
      */
     public ItemBuilder addUnsafeEnchantment(Enchantment ench, int level) {
         is.addUnsafeEnchantment(ench, level);
@@ -108,6 +111,7 @@ public final class ItemBuilder {
      * Remove a certain enchant from the items.
      *
      * @param ench The enchantment to remove
+     * @return ItemBuilder
      */
     public ItemBuilder removeEnchantment(Enchantment ench) {
         is.removeEnchantment(ench);
@@ -118,6 +122,7 @@ public final class ItemBuilder {
      * Set the skull owner for the items. Works on skulls only.
      *
      * @param owner The name of the skull's owner.
+     * @return ItemBuilder
      */
     public ItemBuilder setSkullOwner(String owner) {
         try {
@@ -135,6 +140,7 @@ public final class ItemBuilder {
      *
      * @param ench  The enchant to add
      * @param level The level
+     * @return ItemBuilder
      */
     public ItemBuilder addEnchant(Enchantment ench, int level) {
         ItemMeta im = is.getItemMeta();
@@ -147,6 +153,7 @@ public final class ItemBuilder {
      * Add multiple enchants at once.
      *
      * @param enchantments The enchants to add.
+     * @return ItemBuilder
      */
     public ItemBuilder addEnchantments(Map<Enchantment, Integer> enchantments) {
         is.addEnchantments(enchantments);
@@ -155,6 +162,8 @@ public final class ItemBuilder {
 
     /**
      * Sets infinity durability on the items by setting the durability to Short.MAX_VALUE.
+     *
+     * @return ItemBuilder
      */
     public ItemBuilder setInfinityDurability() {
         is.setDurability(Short.MAX_VALUE);
@@ -165,6 +174,7 @@ public final class ItemBuilder {
      * Re-sets the lore.
      *
      * @param lore The lore to set it to.
+     * @return ItemBuilder
      */
     public ItemBuilder setLore(String... lore) {
         ItemMeta im = is.getItemMeta();
@@ -177,6 +187,7 @@ public final class ItemBuilder {
      * Re-sets the lore.
      *
      * @param lore The lore to set it to.
+     * @return ItemBuilder
      */
     public ItemBuilder setLore(List<String> lore) {
         ItemMeta im = is.getItemMeta();
@@ -189,6 +200,7 @@ public final class ItemBuilder {
      * Remove a lore line.
      *
      * @param line The lore to remove.
+     * @return ItemBuilder
      */
     public ItemBuilder removeLoreLine(String line) {
         ItemMeta im = is.getItemMeta();
@@ -204,6 +216,7 @@ public final class ItemBuilder {
      * Remove a lore line.
      *
      * @param index The index of the lore line to remove.
+     * @return ItemBuilder
      */
     public ItemBuilder removeLoreLine(int index) {
         ItemMeta im = is.getItemMeta();
@@ -219,6 +232,7 @@ public final class ItemBuilder {
      * Add a lore line.
      *
      * @param line The lore line to add.
+     * @return ItemBuilder
      */
     public ItemBuilder addLoreLine(String line) {
         ItemMeta im = is.getItemMeta();
@@ -235,6 +249,7 @@ public final class ItemBuilder {
      *
      * @param line The lore line to add.
      * @param pos  The index of where to put it.
+     * @return ItemBuilder
      */
     public ItemBuilder addLoreLine(String line, int pos) {
         ItemMeta im = is.getItemMeta();
@@ -256,6 +271,7 @@ public final class ItemBuilder {
      * Sets the armor color of a leather armor piece. Works only on leather armor pieces.
      *
      * @param color The color to set it to.
+     * @return ItemBuilder
      */
     public ItemBuilder setLeatherArmorColor(Color color) {
         try {
