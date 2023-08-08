@@ -1,4 +1,4 @@
-package pl.timsixth.guilibrary.core.model.action.custom.impl;
+package pl.timsixth.guilibrary.core.model.action.custom;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;

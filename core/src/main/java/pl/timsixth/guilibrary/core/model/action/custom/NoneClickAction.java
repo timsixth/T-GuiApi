@@ -1,4 +1,4 @@
-package pl.timsixth.guilibrary.core.model.action.custom.impl;
+package pl.timsixth.guilibrary.core.model.action.custom;
 
 import org.bukkit.event.inventory.InventoryClickEvent;
 import pl.timsixth.guilibrary.core.model.MenuItem;

@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
 import pl.timsixth.guilibrary.core.manager.registration.ActionRegistration;
 import pl.timsixth.guilibrary.core.model.EmptySlotFilling;
 import pl.timsixth.guilibrary.core.model.Menu;
@@ -11,13 +12,12 @@ import pl.timsixth.guilibrary.core.model.MenuItem;
 import pl.timsixth.guilibrary.core.model.action.Action;
 import pl.timsixth.guilibrary.core.model.action.SectionAction;
 import pl.timsixth.guilibrary.core.model.action.click.ClickAction;
-import pl.timsixth.guilibrary.core.model.action.custom.impl.NoneClickAction;
+import pl.timsixth.guilibrary.core.model.action.custom.GiveItemsAction;
+import pl.timsixth.guilibrary.core.model.action.custom.NoneClickAction;
+import pl.timsixth.guilibrary.core.util.ItemBuilder;
 import pl.timsixth.guilibrary.core.util.ItemUtil;
 
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Loads menus from YAML files.
@@ -163,7 +163,7 @@ public abstract class YAMLMenuManager extends AbstractMenuManager {
      *
      * @return true if enabled, otherwise not enabled
      */
-    protected boolean enableSectionActions() {
+    public boolean enableSectionActions() {
         return false;
     }
 
@@ -176,5 +176,37 @@ public abstract class YAMLMenuManager extends AbstractMenuManager {
      */
     protected void addSectionActions(ConfigurationSection slotSection, MenuItem menuItem, ClickAction action) {
         throw new UnsupportedOperationException("Not implemented");
+    }
+
+    /**
+     * Loads items from YAML extra section
+     *
+     * @param clickActionSection click action section
+     * @return give items action with items from section
+     */
+    protected ClickAction setItemsToGive(ConfigurationSection clickActionSection) {
+        if (clickActionSection.getConfigurationSection("items") == null) return new NoneClickAction();
+
+        GiveItemsAction giveItemsAction = new GiveItemsAction();
+        ConfigurationSection itemsSection = clickActionSection.getConfigurationSection("items");
+        List<ItemStack> items = new ArrayList<>();
+        for (String materialName : itemsSection.getKeys(false)) {
+            ConfigurationSection materialSection = itemsSection.getConfigurationSection(materialName);
+            ItemStack item = new ItemBuilder(new ItemStack(Material.getMaterial(materialName), materialSection.getInt("amount"))).toItemStack();
+
+            if (materialSection.getInt("id") != 0) {
+                item = new ItemBuilder(new ItemStack(Material.getMaterial(materialName), materialSection.getInt("amount"))).toItemStack();
+            }
+            if (materialSection.getStringList("enchants") != null) {
+                Map<Enchantment, Integer> enchantments = ItemUtil.getEnchantments(materialSection.getStringList("enchants"));
+                item = new ItemBuilder(new ItemStack(Material.getMaterial(materialName), materialSection.getInt("amount")))
+                        .addEnchantments(enchantments)
+                        .toItemStack();
+            }
+            items.add(item);
+        }
+        giveItemsAction.setItems(items);
+
+        return giveItemsAction;
     }
 }

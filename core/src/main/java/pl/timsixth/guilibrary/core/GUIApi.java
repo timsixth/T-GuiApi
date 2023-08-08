@@ -8,8 +8,13 @@ import org.bukkit.plugin.PluginManager;
 import pl.timsixth.guilibrary.core.listener.InventoryClickListener;
 import pl.timsixth.guilibrary.core.manager.AbstractMenuManager;
 import pl.timsixth.guilibrary.core.manager.InMemoryMenuManager;
+import pl.timsixth.guilibrary.core.manager.YAMLMenuManager;
 import pl.timsixth.guilibrary.core.manager.registration.ActionRegistration;
 import pl.timsixth.guilibrary.core.manager.registration.ActionRegistrationImpl;
+import pl.timsixth.guilibrary.core.model.action.custom.CloseMenuAction;
+import pl.timsixth.guilibrary.core.model.action.custom.GiveItemsAction;
+import pl.timsixth.guilibrary.core.model.action.custom.NoneClickAction;
+import pl.timsixth.guilibrary.core.model.action.custom.SendMessageAction;
 import pl.timsixth.guilibrary.core.module.ModuleManager;
 
 /**
@@ -51,5 +56,22 @@ public final class GUIApi {
         PluginManager pluginManager = plugin.getServer().getPluginManager();
 
         pluginManager.registerEvents(new InventoryClickListener(menuManager), plugin);
+    }
+
+    /**
+     * Registers default actions
+     */
+    public void registerDefaultActions() {
+        this.actionRegistration.register(new NoneClickAction()
+                , new CloseMenuAction()
+                , new SendMessageAction());
+
+        if (menuManager instanceof YAMLMenuManager) {
+            YAMLMenuManager yamlMenuManager = (YAMLMenuManager) menuManager;
+
+            if (yamlMenuManager.enableSectionActions())
+                this.actionRegistration.register(new GiveItemsAction());
+        }
+
     }
 }

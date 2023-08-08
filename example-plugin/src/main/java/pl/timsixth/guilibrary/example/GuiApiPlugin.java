@@ -7,9 +7,7 @@ import pl.timsixth.guilibrary.core.manager.AbstractMenuManager;
 import pl.timsixth.guilibrary.core.manager.YAMLMenuManager;
 import pl.timsixth.guilibrary.core.model.Menu;
 import pl.timsixth.guilibrary.core.model.MenuItem;
-import pl.timsixth.guilibrary.core.model.action.custom.impl.GiveItemsActionImpl;
-import pl.timsixth.guilibrary.core.model.action.custom.impl.NoneClickAction;
-import pl.timsixth.guilibrary.core.model.action.custom.impl.SendMessageAction;
+import pl.timsixth.guilibrary.core.model.action.custom.SendMessageAction;
 import pl.timsixth.guilibrary.example.action.ChooseUserGroupAction;
 import pl.timsixth.guilibrary.example.command.TestCommand;
 import pl.timsixth.guilibrary.example.config.ConfigFile;
@@ -28,7 +26,8 @@ public final class GuiApiPlugin extends JavaPlugin {
 
         GUIApi guiApi = new GUIApi(this);
 
-        guiApi.getActionRegistration().register(new NoneClickAction(), new SendMessageAction(), new GiveItemsActionImpl(), new ChooseUserGroupAction());
+        guiApi.registerDefaultActions();
+        guiApi.getActionRegistration().register(new ChooseUserGroupAction());
 
         YAMLMenuManager menuManager = new MenuManager(guiApi.getActionRegistration(), configFile);
 
