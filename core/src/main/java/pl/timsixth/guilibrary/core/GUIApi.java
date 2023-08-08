@@ -45,14 +45,12 @@ public final class GUIApi {
         this.actionRegistration = new ActionRegistrationImpl();
         this.menuManager = new InMemoryMenuManager(actionRegistration);
         this.moduleManager = new ModuleManager();
-
-        this.registerListeners();
     }
 
     /**
      * Registers menu listeners
      */
-    private void registerListeners() {
+    public void registerMenuListener() {
         PluginManager pluginManager = plugin.getServer().getPluginManager();
 
         pluginManager.registerEvents(new InventoryClickListener(menuManager), plugin);
