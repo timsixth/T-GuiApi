@@ -86,7 +86,7 @@ You can create one gui in one file or more than one gui in single file.
 
 ```yaml
 guis: #every gui file must have guis section
-  test: #gui name
+  test: #gui name, must be unique 
     displayname: '&a&lYours chests' #display name of gui name
     size: 54 #size
     empty_slots: #set empty slot filling 
