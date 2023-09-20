@@ -65,7 +65,7 @@ Shading
                             </relocations>
                             <filters>
                                 <filter>
-                                    <artifact>>com.github.timsixth.T-GuiApi:core</artifact>
+                                    <artifact>com.github.timsixth.T-GuiApi:core</artifact>
                                     <excludeDefaults>false</excludeDefaults>
                                     <includes>
                                         <include>{YOUR_PACKAGE}.guilibrary.core</include>
