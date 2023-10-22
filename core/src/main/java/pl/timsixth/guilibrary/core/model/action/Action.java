@@ -6,9 +6,12 @@ import java.util.List;
  * Represents every action in menu
  */
 public interface Action {
+
     /**
      * @return action type
+     * @deprecated for removal in v2.2.0
      */
+    @Deprecated
     ActionType getActionType();
 
     /**

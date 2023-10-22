@@ -9,3 +9,7 @@
 /example-plugin/dependency-reduced-pom.xml
 /core/core.iml
 /example-plugin/example-plugin.iml
+/example-plugin/target/
+/processes/processes.iml
+/processes/target/
+/core/target/

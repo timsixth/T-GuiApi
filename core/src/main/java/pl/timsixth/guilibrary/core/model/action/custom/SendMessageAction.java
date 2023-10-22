@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import pl.timsixth.guilibrary.core.model.MenuItem;
 import pl.timsixth.guilibrary.core.model.action.AbstractAction;
-import pl.timsixth.guilibrary.core.model.action.ActionType;
 import pl.timsixth.guilibrary.core.model.action.click.ClickAction;
 import pl.timsixth.guilibrary.core.util.ChatUtil;
 
@@ -16,7 +15,7 @@ import java.util.List;
 public class SendMessageAction extends AbstractAction implements ClickAction {
 
     public SendMessageAction() {
-        super("SEND_MESSAGE", ActionType.CLICK);
+        super("SEND_MESSAGE");
     }
 
     @Override

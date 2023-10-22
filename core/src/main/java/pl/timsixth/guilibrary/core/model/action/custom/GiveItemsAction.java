@@ -5,7 +5,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import pl.timsixth.guilibrary.core.model.MenuItem;
 import pl.timsixth.guilibrary.core.model.action.AbstractAction;
-import pl.timsixth.guilibrary.core.model.action.ActionType;
 import pl.timsixth.guilibrary.core.model.action.SectionAction;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class GiveItemsAction extends AbstractAction implements SectionAction {
     private List<ItemStack> items;
 
     public GiveItemsAction() {
-        super("GIVE_ITEMS", ActionType.CLICK);
+        super("GIVE_ITEMS");
     }
 
     @Override

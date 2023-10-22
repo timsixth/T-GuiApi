@@ -1,21 +1,23 @@
 package pl.timsixth.guilibrary.core.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemStack;
 import pl.timsixth.guilibrary.core.model.action.Action;
+import pl.timsixth.guilibrary.core.util.ChatUtil;
+import pl.timsixth.guilibrary.core.util.ItemBuilder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents one item in Menu
  */
 @Getter
 @Setter
-@ToString
 @Builder
 @AllArgsConstructor
 public class MenuItem {
@@ -27,12 +29,65 @@ public class MenuItem {
     private Map<Enchantment, Integer> enchantments;
     private Action action;
     private int price;
+    private String localizedName;
+    private ItemStack item;
+    private Menu parentMenu;
 
     public MenuItem(int slot, Material material, String displayName, List<String> lore) {
         this.slot = slot;
         this.material = material;
         this.displayName = displayName;
         this.lore = lore;
+    }
+
+    public MenuItem(int slot, ItemStack item) {
+        this.slot = slot;
+        this.item = item;
+    }
+
+    /**
+     * Creates item stack from {@link MenuItem} data
+     *
+     * @return created item stack
+     */
+    public ItemStack toItemStack() {
+        return toItemStack(Collections.emptyMap());
+    }
+
+    /**
+     * Creates item stack from {@link MenuItem} data with placeholders
+     *
+     * @param placeholders placeholders to replace placeholders
+     * @return created item stack
+     */
+    public ItemStack toItemStack(Map<String, String> placeholders) {
+        if (material == null) return item;
+
+        List<String> replacedLore = new ArrayList<>();
+
+        for (String line : getLore()) {
+            String replacedLine = line;
+
+            for (Map.Entry<String, String> entry : placeholders.entrySet()) {
+                String target = entry.getKey();
+                String replacement = entry.getValue();
+
+                if (!line.contains(target) && !line.contains("{PRICE}")) continue;
+
+                replacedLine = replacedLine.replace(target, replacement)
+                        .replace("{PRICE}", String.valueOf(price));
+            }
+
+            replacedLore.add(replacedLine);
+        }
+
+        if (replacedLore.isEmpty()) replacedLore = getLore();
+
+        return new ItemBuilder(new ItemStack(material, 1))
+                .setLore(ChatUtil.hexColor(replacedLore))
+                .setName(ChatUtil.hexColor(displayName))
+                .addEnchantments(getEnchantments())
+                .toItemStack();
     }
 
     /**
@@ -53,5 +108,20 @@ public class MenuItem {
     public List<String> getLore() {
         if (lore == null) return new ArrayList<>();
         return lore;
+    }
+
+    @Override
+    public String toString() {
+        return "MenuItem{" +
+                "slot=" + slot +
+                ", material=" + material +
+                ", displayName='" + displayName + '\'' +
+                ", lore=" + lore +
+                ", enchantments=" + enchantments +
+                ", action=" + action +
+                ", price=" + price +
+                ", localizedName='" + localizedName + '\'' +
+                ", item=" + item +
+                '}';
     }
 }

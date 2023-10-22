@@ -22,3 +22,30 @@ guis:
           type: 'SEND_MESSAGE'
           args:
             - '&aKOKOS'
+  test2:
+    displayname: '&a&ltest2'
+    size: 54
+    empty_slots:
+      material: BLACK_STAINED_GLASS_PANE
+    slots:
+      21:
+        material: DIAMOND
+        displayname: '&cList is empty'
+        lore:
+          - '{TEST}'
+        click_action:
+          type: 'SEND_MESSAGE'
+          args:
+            - '&aKOKOS'
+      22:
+        material: RED_WOOL
+        displayname: '&cList is empty2'
+        lore:
+          - 'Nick: {username}'
+        click_action:
+          type: 'GIVE_ITEMS'
+          args:
+            - ''
+          items:
+            DIAMOND:
+              amount: 1

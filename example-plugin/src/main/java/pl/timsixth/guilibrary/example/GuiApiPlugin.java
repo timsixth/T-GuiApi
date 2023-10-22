@@ -1,23 +1,26 @@
 package pl.timsixth.guilibrary.example;
 
+import com.github.javafaker.Faker;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.timsixth.guilibrary.core.GUIApi;
-import pl.timsixth.guilibrary.core.manager.AbstractMenuManager;
 import pl.timsixth.guilibrary.core.manager.YAMLMenuManager;
 import pl.timsixth.guilibrary.core.model.Menu;
 import pl.timsixth.guilibrary.core.model.MenuItem;
+import pl.timsixth.guilibrary.core.model.pagination.PaginatedMenu;
 import pl.timsixth.guilibrary.example.action.ChooseUserGroupAction;
-import pl.timsixth.guilibrary.example.command.TestCommand;
+import pl.timsixth.guilibrary.example.command.TestGuiCommand;
 import pl.timsixth.guilibrary.example.config.ConfigFile;
 import pl.timsixth.guilibrary.example.manager.MenuManager;
+import pl.timsixth.guilibrary.example.model.Group;
+import pl.timsixth.guilibrary.example.model.User;
 import pl.timsixth.guilibrary.processes.ProcessesModule;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public final class GuiApiPlugin extends JavaPlugin {
+
+    private YAMLMenuManager menuManager;
 
     @Override
     public void onEnable() {
@@ -25,7 +28,7 @@ public final class GuiApiPlugin extends JavaPlugin {
 
         GUIApi guiApi = new GUIApi(this);
 
-        YAMLMenuManager menuManager = new MenuManager(guiApi.getActionRegistration(), configFile);
+        menuManager = new MenuManager(guiApi.getActionRegistration(), configFile);
 
         guiApi.setMenuManager(menuManager);
 
@@ -38,11 +41,13 @@ public final class GuiApiPlugin extends JavaPlugin {
 
         menuManager.load();
 
-        getCommand("test").setExecutor(new TestCommand(menuManager, this));
+        getCommand("testgui").setExecutor(new TestGuiCommand(menuManager, this));
 
-        createChooseUserGroup(menuManager);
+        createChooseUserGroup();
+        createPagination();
     }
-    private void createChooseUserGroup(AbstractMenuManager menuManager) {
+
+    private void createChooseUserGroup() {
 
         ChooseUserGroupAction chooseUserGroupAction = new ChooseUserGroupAction();
         chooseUserGroupAction.setArgs(Collections.singletonList("ADMIN"));
@@ -76,5 +81,26 @@ public final class GuiApiPlugin extends JavaPlugin {
                 .build();
 
         menuManager.getMenus().add(menu);
+    }
+
+    private void createPagination() {
+        PaginatedMenu paginatedMenu = new PaginatedMenu(27, "paginatedMenu", "pages");
+
+        List<User> users = new LinkedList<>();
+
+        Faker faker = new Faker();
+
+        for (int i = 0; i < 55; i++) {
+            int age = faker.number().numberBetween(10, 60);
+            Group group = faker.options().option(Group.ADMIN, Group.MODERATOR);
+
+            users.add(new User(faker.name().name(), faker.name().lastName(), age, group));
+        }
+
+        paginatedMenu.setData(users);
+        paginatedMenu.setItemsPerPage(10);
+        paginatedMenu.useDefaultStaticItems();
+
+        menuManager.getPaginatedMenus().add(paginatedMenu);
     }
 }

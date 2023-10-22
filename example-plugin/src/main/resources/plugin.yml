@@ -4,4 +4,4 @@ version: '2.0.0'
 author: timsixth
 api-version: 1.13
 commands:
-  test:
+  testgui:

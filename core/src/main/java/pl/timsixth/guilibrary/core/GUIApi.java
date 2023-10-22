@@ -11,10 +11,7 @@ import pl.timsixth.guilibrary.core.manager.InMemoryMenuManager;
 import pl.timsixth.guilibrary.core.manager.YAMLMenuManager;
 import pl.timsixth.guilibrary.core.manager.registration.ActionRegistration;
 import pl.timsixth.guilibrary.core.manager.registration.ActionRegistrationImpl;
-import pl.timsixth.guilibrary.core.model.action.custom.CloseMenuAction;
-import pl.timsixth.guilibrary.core.model.action.custom.GiveItemsAction;
-import pl.timsixth.guilibrary.core.model.action.custom.NoneClickAction;
-import pl.timsixth.guilibrary.core.model.action.custom.SendMessageAction;
+import pl.timsixth.guilibrary.core.model.action.custom.*;
 import pl.timsixth.guilibrary.core.module.ModuleManager;
 
 /**
@@ -62,7 +59,10 @@ public final class GUIApi {
     public void registerDefaultActions() {
         this.actionRegistration.register(new NoneClickAction()
                 , new CloseMenuAction()
-                , new SendMessageAction());
+                , new SendMessageAction()
+                , new PreviousPageAction()
+                , new NextPageAction()
+        );
 
         if (menuManager instanceof YAMLMenuManager) {
             YAMLMenuManager yamlMenuManager = (YAMLMenuManager) menuManager;

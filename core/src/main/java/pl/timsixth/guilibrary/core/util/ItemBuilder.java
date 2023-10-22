@@ -156,7 +156,11 @@ public final class ItemBuilder {
      * @return ItemBuilder
      */
     public ItemBuilder addEnchantments(Map<Enchantment, Integer> enchantments) {
-        is.addEnchantments(enchantments);
+        ItemMeta meta = is.getItemMeta();
+
+        enchantments.forEach((enchantment, level) -> meta.addEnchant(enchantment, level, true));
+        is.setItemMeta(meta);
+
         return this;
     }
 

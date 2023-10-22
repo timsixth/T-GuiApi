@@ -8,13 +8,13 @@ import org.bukkit.inventory.ItemStack;
 import pl.timsixth.guilibrary.core.manager.registration.ActionRegistration;
 import pl.timsixth.guilibrary.core.model.Menu;
 import pl.timsixth.guilibrary.core.model.MenuItem;
+import pl.timsixth.guilibrary.core.model.pagination.PaginatedMenu;
 import pl.timsixth.guilibrary.core.util.ChatUtil;
-import pl.timsixth.guilibrary.core.util.ItemBuilder;
 
 import java.util.*;
 
 @RequiredArgsConstructor
-public abstract class AbstractMenuManager {
+public abstract class AbstractMenuManager extends Pagination {
 
     protected final ActionRegistration actionRegistration;
 
@@ -40,6 +40,17 @@ public abstract class AbstractMenuManager {
      * @return generated inventory
      */
     public Inventory createMenu(Menu menu) {
+        return createMenu(menu, Collections.emptyMap());
+    }
+
+    /**
+     * Generates inventory based on {@link Menu}
+     *
+     * @param menu         menu to generate inventory
+     * @param placeholders placeholders to replace placeholders
+     * @return generated inventory
+     */
+    public Inventory createMenu(Menu menu, Map<String, String> placeholders) {
         Inventory inv = Bukkit.createInventory(null, menu.getSize(), ChatUtil.chatColor(menu.getDisplayName()));
 
         if (menu.getEmptySlotFilling() != null) {
@@ -49,18 +60,19 @@ public abstract class AbstractMenuManager {
         }
 
         for (MenuItem menuItem : menu.getItems()) {
-            List<String> replaceLore = new ArrayList<>();
-            for (String line : menuItem.getLore()) {
-                replaceLore.add(line.replace("{PRICE}", String.valueOf(menuItem.getPrice())));
-            }
-
-            inv.setItem(menuItem.getSlot(), new ItemBuilder(new ItemStack(menuItem.getMaterial(), 1))
-                    .setLore(ChatUtil.chatColor(replaceLore))
-                    .setName(ChatUtil.chatColor(menuItem.getDisplayName()))
-                    .addEnchantments(menuItem.getEnchantments())
-                    .toItemStack()
-            );
+            inv.setItem(menuItem.getSlot(), menuItem.toItemStack(placeholders));
         }
+
         return inv;
+    }
+
+    /**
+     * Generates inventory based on {@link PaginatedMenu}
+     *
+     * @param menu menu to generate inventory
+     * @return generated inventory
+     */
+    public Optional<Inventory> createPaginatedMenu(PaginatedMenu menu) {
+        return super.createPaginatedInventory(menu, menus);
     }
 }
