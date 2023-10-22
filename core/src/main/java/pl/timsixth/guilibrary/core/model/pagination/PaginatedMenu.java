@@ -104,7 +104,7 @@ public class PaginatedMenu extends BaseMenu {
      * @param itemsPerPage items per page
      */
     public void setItemsPerPage(int itemsPerPage) {
-        if (itemsPerPage == 0) throw new IllegalArgumentException("Items per page can not be zero");
+        if (itemsPerPage <= 0) throw new IllegalArgumentException("Items per page can not be zero");
 
         this.itemsPerPage = itemsPerPage;
     }
