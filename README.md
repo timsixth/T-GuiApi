@@ -3,6 +3,8 @@
 Gui is generating from YAML files.
 This library is using in my plugins.
 
+JavaDocs: https://timsixth.pl/javadocs/gui_api/2.1.0/
+
 ## Examples
 https://github.com/timsixth/T-GuiApi/tree/main/example-plugin/src/main/java/pl/timsixth/guilibrary/example<br>
 https://github.com/timsixth/T-GuiApi/blob/main/example-plugin/src/main/resources/guis.yml
