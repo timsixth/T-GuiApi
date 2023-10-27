@@ -18,6 +18,9 @@ guis:
       21:
         material: DIAMOND
         displayname: '&cList is empty'
+        price: 1200
+        lore:
+          - 'Price {PRICE}'
         click_action:
           type: 'SEND_MESSAGE'
           args:

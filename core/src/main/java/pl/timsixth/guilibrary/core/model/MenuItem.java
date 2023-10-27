@@ -65,7 +65,15 @@ public class MenuItem {
 
         List<String> replacedLore = new ArrayList<>();
 
+        if (placeholders.isEmpty()) {
+            for (String line : getLore()) {
+                replacedLore.add(line.replace("{PRICE}", String.valueOf(price)));
+            }
+        }
+
         for (String line : getLore()) {
+            if (placeholders.isEmpty()) break;
+
             String replacedLine = line;
 
             for (Map.Entry<String, String> entry : placeholders.entrySet()) {
@@ -80,8 +88,6 @@ public class MenuItem {
 
             replacedLore.add(replacedLine);
         }
-
-        if (replacedLore.isEmpty()) replacedLore = getLore();
 
         return new ItemBuilder(new ItemStack(material, 1))
                 .setLore(ChatUtil.hexColor(replacedLore))

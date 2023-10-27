@@ -7,7 +7,7 @@ import static org.junit.Assert.assertEquals;
 public class PlaceholderTest {
 
     @Test
-    public void replacePlaceholders() {
+    public void shouldReplacePlaceholders() {
         List<String> replacedLore = new ArrayList<>();
 
         Map<String, String> placeholders = new HashMap<>();
