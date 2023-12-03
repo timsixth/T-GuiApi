@@ -11,6 +11,8 @@ import pl.timsixth.guilibrary.core.model.MenuItem;
 import pl.timsixth.guilibrary.core.model.action.click.ClickAction;
 import pl.timsixth.guilibrary.core.util.ChatUtil;
 
+import java.util.HashSet;
+
 @RequiredArgsConstructor
 public class InventoryClickListener implements Listener {
 
@@ -20,7 +22,7 @@ public class InventoryClickListener implements Listener {
     public void onClick(InventoryClickEvent event) {
         if (event.getCurrentItem() == null || event.getCurrentItem().getType() == Material.AIR) return;
 
-        for (Menu menu : menuManager.getMenus()) {
+        for (Menu menu : new HashSet<>(menuManager.getMenus())) {
             if (event.getView().getTitle().equalsIgnoreCase(ChatUtil.chatColor(menu.getDisplayName()))) {
                 for (MenuItem menuItem : menu.getItems()) {
                     if (event.getSlot() == menuItem.getSlot()) {

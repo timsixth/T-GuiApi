@@ -4,8 +4,10 @@ import lombok.Data;
 import org.bukkit.Material;
 import pl.timsixth.guilibrary.core.model.Generable;
 import pl.timsixth.guilibrary.core.model.MenuItem;
+import pl.timsixth.guilibrary.core.model.action.custom.SendMessageAction;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 @Data
 public class User implements Generable {
@@ -17,6 +19,12 @@ public class User implements Generable {
 
     @Override
     public MenuItem getGeneratedItem(int slot) {
-        return new MenuItem(slot, Material.PLAYER_HEAD, name + " " + surname, Arrays.asList("Age: " + age, "Group: " + group.getColor() + group));
+        MenuItem menuItem = new MenuItem(slot, Material.PLAYER_HEAD, name + " " + surname, Arrays.asList("Age: " + age, "Group: " + group.getColor() + group));
+
+        SendMessageAction action = new SendMessageAction();
+        action.setArgs(Collections.singletonList("&cTest"));
+        menuItem.setAction(action);
+
+        return menuItem;
     }
 }

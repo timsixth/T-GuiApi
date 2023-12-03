@@ -1,6 +1,7 @@
 package pl.timsixth.guilibrary.example;
 
 import com.github.javafaker.Faker;
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 import pl.timsixth.guilibrary.core.GUIApi;
@@ -9,6 +10,7 @@ import pl.timsixth.guilibrary.core.model.Menu;
 import pl.timsixth.guilibrary.core.model.MenuItem;
 import pl.timsixth.guilibrary.core.model.pagination.PaginatedMenu;
 import pl.timsixth.guilibrary.example.action.ChooseUserGroupAction;
+import pl.timsixth.guilibrary.example.action.OpenPaginatedMenuAction;
 import pl.timsixth.guilibrary.example.command.TestGuiCommand;
 import pl.timsixth.guilibrary.example.config.ConfigFile;
 import pl.timsixth.guilibrary.example.manager.MenuManager;
@@ -18,6 +20,7 @@ import pl.timsixth.guilibrary.processes.ProcessesModule;
 
 import java.util.*;
 
+@Getter
 public final class GuiApiPlugin extends JavaPlugin {
 
     private YAMLMenuManager menuManager;
@@ -33,7 +36,7 @@ public final class GuiApiPlugin extends JavaPlugin {
         guiApi.setMenuManager(menuManager);
 
         guiApi.registerDefaultActions();
-        guiApi.getActionRegistration().register(new ChooseUserGroupAction());
+        guiApi.getActionRegistration().register(new ChooseUserGroupAction(), new OpenPaginatedMenuAction());
 
         guiApi.getModuleManager().registerModule(new ProcessesModule(this));
 
@@ -86,6 +89,16 @@ public final class GuiApiPlugin extends JavaPlugin {
     private void createPagination() {
         PaginatedMenu paginatedMenu = new PaginatedMenu(27, "paginatedMenu", "pages");
 
+        List<User> users = getUsers();
+
+        paginatedMenu.setData(users);
+        paginatedMenu.setItemsPerPage(10);
+        paginatedMenu.useDefaultStaticItems();
+
+        menuManager.getPaginatedMenus().add(paginatedMenu);
+    }
+
+    public List<User> getUsers() {
         List<User> users = new LinkedList<>();
 
         Faker faker = new Faker();
@@ -97,10 +110,6 @@ public final class GuiApiPlugin extends JavaPlugin {
             users.add(new User(faker.name().name(), faker.name().lastName(), age, group));
         }
 
-        paginatedMenu.setData(users);
-        paginatedMenu.setItemsPerPage(10);
-        paginatedMenu.useDefaultStaticItems();
-
-        menuManager.getPaginatedMenus().add(paginatedMenu);
+        return users;
     }
 }

@@ -32,6 +32,7 @@ public class MenuItem {
     private String localizedName;
     private ItemStack item;
     private Menu parentMenu;
+    private boolean disabled;
 
     public MenuItem(int slot, Material material, String displayName, List<String> lore) {
         this.slot = slot;

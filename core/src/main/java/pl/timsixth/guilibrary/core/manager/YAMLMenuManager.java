@@ -89,8 +89,10 @@ public abstract class YAMLMenuManager extends AbstractMenuManager {
         setPrice(slotSection, menuItem);
         setEnchants(slotSection, menuItem);
         setAction(slotSection, menuItem);
+        setDisabled(slotSection, menuItem);
 
-        menuItemSet.add(menuItem);
+        if (!menuItem.isDisabled())
+            menuItemSet.add(menuItem);
     }
 
     /**
@@ -156,6 +158,18 @@ public abstract class YAMLMenuManager extends AbstractMenuManager {
             Map<Enchantment, Integer> enchantments = ItemUtil.getEnchantments(slot.getStringList("enchants"));
             menuItem.setEnchantments(enchantments);
         }
+    }
+
+    /**
+     * Disables menu item
+     * Menu item is enabled by default.
+     *
+     * @param slot     slot section
+     * @param menuItem menuItem to disable
+     */
+    private void setDisabled(ConfigurationSection slot, MenuItem menuItem) {
+        boolean disabled = slot.getBoolean("disabled");
+        menuItem.setDisabled(disabled);
     }
 
     /**

@@ -1,3 +1,5 @@
+package pl.timsixth.guilibrary.core;
+
 import org.junit.Test;
 
 import java.util.*;

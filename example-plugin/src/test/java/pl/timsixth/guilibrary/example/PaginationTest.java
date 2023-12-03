@@ -1,3 +1,5 @@
+package pl.timsixth.guilibrary.example;
+
 import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;

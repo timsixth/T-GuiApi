@@ -25,6 +25,15 @@ guis:
           type: 'SEND_MESSAGE'
           args:
             - '&aKOKOS'
+      1:
+        material: DIAMOND
+        displayname: '&cCheck action'
+        lore:
+          - 'Price {PRICE}'
+        click_action:
+          type: 'OPEN_PAGINATED_MENU'
+          args:
+            - ''
   test2:
     displayname: '&a&ltest2'
     size: 54
