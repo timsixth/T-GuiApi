@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @ToString
-public class PaginatedMenu extends BaseMenu {
+public class PaginatedMenu extends BaseMenu implements Cloneable {
 
     private int itemsPerPage;
     private int currentPage = 0;
@@ -117,6 +117,10 @@ public class PaginatedMenu extends BaseMenu {
     public int generatePages() {
         if (itemsPerPage > getSize()) {
             throw new IllegalStateException("Number of items per page can not be greater than inventory size");
+        }
+
+        if (!pages.isEmpty()) {
+            pages.clear();
         }
 
         if (data.size() < itemsPerPage) {
@@ -239,5 +243,14 @@ public class PaginatedMenu extends BaseMenu {
      */
     public Page generateExtraPage(int latestIndex) {
         return createPage(latestIndex);
+    }
+
+    @Override
+    public PaginatedMenu clone() {
+        try {
+            return (PaginatedMenu) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

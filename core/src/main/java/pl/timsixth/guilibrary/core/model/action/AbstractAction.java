@@ -13,24 +13,10 @@ import java.util.List;
 public abstract class AbstractAction implements Action {
 
     private final String name;
-    @Deprecated
-    private ActionType actionType;
     private List<String> args;
-
-    @Deprecated
-    public AbstractAction(String name, ActionType actionType) {
-        this.name = name;
-        this.actionType = actionType;
-    }
 
     public AbstractAction(String name) {
         this.name = name;
-    }
-
-    @Deprecated
-    @Override
-    public ActionType getActionType() {
-        return actionType;
     }
 
     @Override

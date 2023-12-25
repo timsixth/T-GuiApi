@@ -8,13 +8,6 @@ import java.util.List;
 public interface Action {
 
     /**
-     * @return action type
-     * @deprecated for removal in v2.2.0
-     */
-    @Deprecated
-    ActionType getActionType();
-
-    /**
      * @return action name
      */
     String getName();

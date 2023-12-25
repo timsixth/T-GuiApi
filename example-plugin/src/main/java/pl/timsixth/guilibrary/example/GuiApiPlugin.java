@@ -12,8 +12,10 @@ import pl.timsixth.guilibrary.core.model.pagination.PaginatedMenu;
 import pl.timsixth.guilibrary.example.action.ChooseUserGroupAction;
 import pl.timsixth.guilibrary.example.action.OpenPaginatedMenuAction;
 import pl.timsixth.guilibrary.example.command.TestGuiCommand;
+import pl.timsixth.guilibrary.example.command.UserCommand;
 import pl.timsixth.guilibrary.example.config.ConfigFile;
 import pl.timsixth.guilibrary.example.manager.MenuManager;
+import pl.timsixth.guilibrary.example.manager.UserManager;
 import pl.timsixth.guilibrary.example.model.Group;
 import pl.timsixth.guilibrary.example.model.User;
 import pl.timsixth.guilibrary.processes.ProcessesModule;
@@ -24,6 +26,7 @@ import java.util.*;
 public final class GuiApiPlugin extends JavaPlugin {
 
     private YAMLMenuManager menuManager;
+    UserManager userManager;
 
     @Override
     public void onEnable() {
@@ -44,10 +47,16 @@ public final class GuiApiPlugin extends JavaPlugin {
 
         menuManager.load();
 
-        getCommand("testgui").setExecutor(new TestGuiCommand(menuManager, this));
+        userManager = new UserManager();
+
+        getCommand("testgui").setExecutor(new TestGuiCommand(menuManager, this, userManager));
+        getCommand("user").setExecutor(new UserCommand(userManager));
 
         createChooseUserGroup();
         createPagination();
+        createPagination2();
+
+
     }
 
     private void createChooseUserGroup() {
@@ -95,7 +104,19 @@ public final class GuiApiPlugin extends JavaPlugin {
         paginatedMenu.setItemsPerPage(10);
         paginatedMenu.useDefaultStaticItems();
 
-        menuManager.getPaginatedMenus().add(paginatedMenu);
+        menuManager.addPaginatedMenu(paginatedMenu);
+    }
+
+    private void createPagination2() {
+        PaginatedMenu paginatedMenu = new PaginatedMenu(27, "paginatedMenu1", "pages1");
+
+        List<User> users = userManager.getUserList();
+
+        paginatedMenu.setData(users);
+        paginatedMenu.setItemsPerPage(10);
+        paginatedMenu.useDefaultStaticItems();
+
+        menuManager.addPaginatedMenu(paginatedMenu);
     }
 
     public List<User> getUsers() {

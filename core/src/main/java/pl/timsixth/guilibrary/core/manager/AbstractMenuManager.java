@@ -3,6 +3,7 @@ package pl.timsixth.guilibrary.core.manager;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import pl.timsixth.guilibrary.core.manager.registration.ActionRegistration;
@@ -76,5 +77,16 @@ public abstract class AbstractMenuManager extends Pagination {
      */
     public Optional<Inventory> createPaginatedMenu(PaginatedMenu menu) {
         return super.createPaginatedInventory(menu, menus);
+    }
+
+    /**
+     * Generates inventory based on {@link PaginatedMenu} for one player
+     *
+     * @param menu   menu to generate inventory
+     * @param player player to generate inventory
+     * @return generated inventory
+     */
+    public Optional<Inventory> createPaginatedMenu(Player player, PaginatedMenu menu) {
+        return super.createPaginatedInventory(player, menu, menus);
     }
 }

@@ -10,6 +10,7 @@ import pl.timsixth.guilibrary.core.manager.AbstractMenuManager;
 import pl.timsixth.guilibrary.core.model.Menu;
 import pl.timsixth.guilibrary.core.model.pagination.PaginatedMenu;
 import pl.timsixth.guilibrary.example.GuiApiPlugin;
+import pl.timsixth.guilibrary.example.manager.UserManager;
 import pl.timsixth.guilibrary.example.process.CreateUserProcess;
 import pl.timsixth.guilibrary.processes.manager.ProcessRunner;
 
@@ -22,6 +23,7 @@ public class TestGuiCommand implements CommandExecutor {
 
     private final AbstractMenuManager menuManager;
     private final GuiApiPlugin guiApiPlugin;
+    private final UserManager userManager;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -52,10 +54,22 @@ public class TestGuiCommand implements CommandExecutor {
                 paginatedInventory.ifPresent(player::openInventory);
             } else if (args[0].equalsIgnoreCase("placeholder")) {
                 Map<String, String> placeholders = new HashMap<>();
-                placeholders.put("{TEST}","123");
+                placeholders.put("{TEST}", "123");
                 placeholders.put("{username}", player.getName());
 
                 menuManager.getMenuByName("test2").ifPresent(menu -> player.openInventory(menuManager.createMenu(menu, placeholders)));
+            } else if (args[0].equalsIgnoreCase("gui2")) {
+
+                Optional<PaginatedMenu> menuOptional = menuManager.getPaginatedMenu("paginatedMenu1");
+
+                if (!menuOptional.isPresent()) return true;
+
+                PaginatedMenu menu = menuOptional.get();
+
+                menu.setData(userManager.getUserList());
+
+                menuManager.createPaginatedMenu(player, menu)
+                        .ifPresent(player::openInventory);
             }
         }
 
