@@ -55,4 +55,16 @@ public class UserMenus {
                 .findAny();
     }
 
+    /**
+     * Refreshes list of data
+     *
+     * @param paginatedMenu menu to refresh data
+     * @param data          new list of data to set
+     */
+    public void refreshPaginatedMenu(PaginatedMenu paginatedMenu, List<? extends Generable> data) {
+        if (paginatedMenu.getData().size() != data.size()) {
+            paginatedMenu.setData(new ArrayList<>(data));
+        }
+    }
+
 }

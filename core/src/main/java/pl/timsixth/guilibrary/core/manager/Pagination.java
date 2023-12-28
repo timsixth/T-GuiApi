@@ -167,7 +167,11 @@ public abstract class Pagination {
                 return createPaginatedInventory(paginatedMenu, menus);
             }
 
-            return createPaginatedInventory(paginatedMenuoOptional.get(), menus);
+            PaginatedMenu paginatedMenu = paginatedMenuoOptional.get();
+
+            userMenus.refreshPaginatedMenu(paginatedMenu, menu.getData());
+
+            return createPaginatedInventory(paginatedMenu, menus);
         }
 
         UserMenus userMenus = new UserMenus(player.getUniqueId());
