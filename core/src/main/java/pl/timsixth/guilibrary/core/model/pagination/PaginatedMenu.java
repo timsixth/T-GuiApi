@@ -2,7 +2,6 @@ package pl.timsixth.guilibrary.core.model.pagination;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 import org.bukkit.Material;
 import pl.timsixth.guilibrary.core.model.BaseMenu;
 import pl.timsixth.guilibrary.core.model.Generable;
@@ -16,8 +15,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@ToString
-public class PaginatedMenu extends BaseMenu implements Cloneable {
+public class PaginatedMenu extends BaseMenu {
 
     private int itemsPerPage;
     private int currentPage = 0;
@@ -44,6 +42,18 @@ public class PaginatedMenu extends BaseMenu implements Cloneable {
 
         pages = new ArrayList<>();
         staticItems = new ArrayList<>();
+    }
+
+    public PaginatedMenu(PaginatedMenu paginatedMenu) {
+        super(paginatedMenu.getSize(),
+                paginatedMenu.getName(),
+                paginatedMenu.getDisplayName());
+
+        this.pages = new ArrayList<>(paginatedMenu.getPages());
+        this.staticItems = new ArrayList<>(paginatedMenu.getStaticItems());
+        this.data = new ArrayList<>(paginatedMenu.getData());
+        this.itemsPerPage = paginatedMenu.getItemsPerPage();
+        this.currentPage = paginatedMenu.getCurrentPage();
     }
 
     /**
@@ -246,11 +256,15 @@ public class PaginatedMenu extends BaseMenu implements Cloneable {
     }
 
     @Override
-    public PaginatedMenu clone() {
-        try {
-            return (PaginatedMenu) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
+    public String toString() {
+        return "PaginatedMenu{" +
+                "name=" + super.getName() +
+                " displayName=" + super.getDisplayName() +
+                " itemsPerPage=" + itemsPerPage +
+                ", currentPage=" + currentPage +
+                ", pages=" + pages +
+                ", staticItems=" + staticItems +
+                ", data=" + data +
+                '}';
     }
 }

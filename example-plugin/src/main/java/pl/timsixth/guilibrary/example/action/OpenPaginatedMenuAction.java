@@ -14,7 +14,7 @@ import java.util.Optional;
 
 public class OpenPaginatedMenuAction extends AbstractAction implements ClickAction {
 
-    private final GuiApiPlugin guiApiPlugin = GuiApiPlugin.getPlugin(GuiApiPlugin.class);
+    private final GuiApiPlugin guiApiPlugin = GuiApiPlugin.getInstance();
     private final YAMLMenuManager menuManager = guiApiPlugin.getMenuManager();
 
     public OpenPaginatedMenuAction() {

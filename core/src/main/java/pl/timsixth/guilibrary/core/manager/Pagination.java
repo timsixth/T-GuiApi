@@ -161,19 +161,35 @@ public abstract class Pagination {
             UserMenus userMenus = userMenusOptional.get();
 
             Optional<PaginatedMenu> paginatedMenuoOptional = userMenus.getPaginatedMenuByName(menu.getName());
+            if (!paginatedMenuoOptional.isPresent()) {
+                PaginatedMenu paginatedMenu = createPaginatedMenuForPlayer(menu, userMenus);
 
-            if (!paginatedMenuoOptional.isPresent()) return Optional.empty();
+                return createPaginatedInventory(paginatedMenu, menus);
+            }
 
             return createPaginatedInventory(paginatedMenuoOptional.get(), menus);
         }
 
         UserMenus userMenus = new UserMenus(player.getUniqueId());
 
+        PaginatedMenu paginatedMenu = createPaginatedMenuForPlayer(menu, userMenus);
+
+        return createPaginatedInventory(paginatedMenu, menus);
+    }
+
+    /**
+     * Creates menu for one player
+     *
+     * @param menu      menu to switch to player mode
+     * @param userMenus object which stores list of player's menus
+     * @return cloned paginated menu
+     */
+    private PaginatedMenu createPaginatedMenuForPlayer(PaginatedMenu menu, UserMenus userMenus) {
         PaginatedMenu paginatedMenu = userMenus.switchMenuForPlayerMode(menu);
 
         usersMenus.add(userMenus);
 
-        return createPaginatedInventory(paginatedMenu, menus);
+        return paginatedMenu;
     }
 
     /**

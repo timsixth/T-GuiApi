@@ -28,7 +28,7 @@ public class UserMenus {
      * @return switched menu
      */
     public PaginatedMenu switchMenuForPlayerMode(PaginatedMenu menu) {
-        PaginatedMenu clonedMenu = menu.clone();
+        PaginatedMenu clonedMenu = new PaginatedMenu(menu);
 
         String name = clonedMenu.getName();
 

@@ -1,9 +1,10 @@
 package pl.timsixth.guilibrary.example;
 
-import com.github.javafaker.Faker;
 import lombok.Getter;
 import org.bukkit.Material;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.java.JavaPluginLoader;
 import pl.timsixth.guilibrary.core.GUIApi;
 import pl.timsixth.guilibrary.core.manager.YAMLMenuManager;
 import pl.timsixth.guilibrary.core.model.Menu;
@@ -16,10 +17,12 @@ import pl.timsixth.guilibrary.example.command.UserCommand;
 import pl.timsixth.guilibrary.example.config.ConfigFile;
 import pl.timsixth.guilibrary.example.manager.MenuManager;
 import pl.timsixth.guilibrary.example.manager.UserManager;
+import pl.timsixth.guilibrary.example.manager.UserRandomizer;
 import pl.timsixth.guilibrary.example.model.Group;
 import pl.timsixth.guilibrary.example.model.User;
 import pl.timsixth.guilibrary.processes.ProcessesModule;
 
+import java.io.File;
 import java.util.*;
 
 @Getter
@@ -28,8 +31,19 @@ public final class GuiApiPlugin extends JavaPlugin {
     private YAMLMenuManager menuManager;
     UserManager userManager;
 
+    public GuiApiPlugin() {
+    }
+
+    public GuiApiPlugin(JavaPluginLoader loader, PluginDescriptionFile description, File dataFolder, File file) {
+        super(loader, description, dataFolder, file);
+    }
+
+    @Getter
+    private static GuiApiPlugin instance;
+
     @Override
     public void onEnable() {
+        instance = this;
         ConfigFile configFile = new ConfigFile(this);
 
         GUIApi guiApi = new GUIApi(this);
@@ -122,13 +136,13 @@ public final class GuiApiPlugin extends JavaPlugin {
     public List<User> getUsers() {
         List<User> users = new LinkedList<>();
 
-        Faker faker = new Faker();
+        UserRandomizer userRandomizer = new UserRandomizer();
 
         for (int i = 0; i < 55; i++) {
-            int age = faker.number().numberBetween(10, 60);
-            Group group = faker.options().option(Group.ADMIN, Group.MODERATOR);
+            int age = userRandomizer.getRandomAge();
+            Group group = userRandomizer.getRandomGroup();
 
-            users.add(new User(faker.name().name(), faker.name().lastName(), age, group));
+            users.add(new User(userRandomizer.getRandomName(), userRandomizer.getRandomLastName(), age, group));
         }
 
         return users;

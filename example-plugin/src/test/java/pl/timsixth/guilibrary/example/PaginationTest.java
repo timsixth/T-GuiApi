@@ -1,10 +1,10 @@
 package pl.timsixth.guilibrary.example;
 
-import com.github.javafaker.Faker;
 import org.junit.Before;
 import org.junit.Test;
 import pl.timsixth.guilibrary.core.model.pagination.Page;
 import pl.timsixth.guilibrary.core.model.pagination.PaginatedMenu;
+import pl.timsixth.guilibrary.example.manager.UserRandomizer;
 import pl.timsixth.guilibrary.example.model.Group;
 import pl.timsixth.guilibrary.example.model.User;
 
@@ -23,13 +23,13 @@ public class PaginationTest {
 
         List<User> users = new LinkedList<>();
 
-        Faker faker = new Faker();
+        UserRandomizer userRandomizer = new UserRandomizer();
 
-        for (int i = 0; i < 51; i++) {
-            int age = faker.number().numberBetween(10, 60);
-            Group group = faker.options().option(Group.ADMIN, Group.MODERATOR);
+        for (int i = 0; i < 55; i++) {
+            int age = userRandomizer.getRandomAge();
+            Group group = userRandomizer.getRandomGroup();
 
-            users.add(new User(faker.name().name(), faker.name().lastName(), age, group));
+            users.add(new User(userRandomizer.getRandomName(), userRandomizer.getRandomLastName(), age, group));
         }
 
         menu.setData(users);
