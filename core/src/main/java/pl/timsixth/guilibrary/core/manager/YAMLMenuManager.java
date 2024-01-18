@@ -142,8 +142,8 @@ public abstract class YAMLMenuManager extends AbstractMenuManager {
      * @param menuItem menuItem to set price
      */
     private void setPrice(ConfigurationSection slot, MenuItem menuItem) {
-        if (slot.getInt("price") != 0) {
-            menuItem.setPrice(slot.getInt("price"));
+        if (slot.getDouble("price") != 0) {
+            menuItem.setPrice(slot.getDouble("price"));
         }
     }
 

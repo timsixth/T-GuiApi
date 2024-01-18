@@ -28,7 +28,7 @@ public class MenuItem {
     private List<String> lore;
     private Map<Enchantment, Integer> enchantments;
     private Action action;
-    private int price;
+    private double price;
     private String localizedName;
     private ItemStack item;
     private Menu parentMenu;
