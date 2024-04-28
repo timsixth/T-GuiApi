@@ -10,7 +10,9 @@ import pl.timsixth.guilibrary.core.util.ChatUtil;
 
 /**
  * The listener ends current user process when player close inventory.
+ * @deprecated
  */
+@Deprecated
 public class InventoryCloseListener implements Listener {
 
     @EventHandler

@@ -4,7 +4,7 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Deprecated
 @Getter
 public final class ModuleManager {
     private final List<Module> modules = new ArrayList<>();
