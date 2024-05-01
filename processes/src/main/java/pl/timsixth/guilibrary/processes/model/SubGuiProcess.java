@@ -68,6 +68,8 @@ public interface SubGuiProcess extends GuiProcess {
      * Gets inventory display name.<br>
      *
      * @return inventory display name.
+     * @deprecated
      */
+    @Deprecated
     String getInventoryDisplayName();
 }

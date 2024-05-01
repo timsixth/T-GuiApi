@@ -1,7 +1,10 @@
 package pl.timsixth.guilibrary.processes.manager;
 
 import lombok.Getter;
+import net.wesjd.anvilgui.version.VersionMatcher;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import pl.timsixth.guilibrary.core.util.ChatUtil;
 import pl.timsixth.guilibrary.processes.model.MainGuiProcess;
 import pl.timsixth.guilibrary.processes.model.SubGuiProcess;
 import pl.timsixth.guilibrary.processes.model.input.WriteableInput;
@@ -48,8 +51,15 @@ public final class ProcessRunner {
 
         if (subGuiProcess instanceof WriteableInput) {
             WriteableInput writeable = (WriteableInput) subGuiProcess;
+            try {
+                new VersionMatcher().match();
 
-            writeable.getAnvilInput().open(player);
+                writeable.getAnvilInput().open(player);
+            } catch (IllegalStateException ex) {
+                player.sendMessage(ChatUtil.chatColor("&cThis " + Bukkit.getBukkitVersion() + " version is not supported"));
+                Bukkit.getLogger().severe(ex.getMessage());
+            }
+
             return;
         }
 
