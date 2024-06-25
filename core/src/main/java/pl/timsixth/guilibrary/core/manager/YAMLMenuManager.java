@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import pl.timsixth.guilibrary.core.manager.registration.ActionRegistration;
 import pl.timsixth.guilibrary.core.model.EmptySlotFilling;
@@ -18,6 +19,7 @@ import pl.timsixth.guilibrary.core.util.ItemBuilder;
 import pl.timsixth.guilibrary.core.util.ItemUtil;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Loads menus from YAML files.
@@ -90,6 +92,8 @@ public abstract class YAMLMenuManager extends AbstractMenuManager {
         setEnchants(slotSection, menuItem);
         setAction(slotSection, menuItem);
         setDisabled(slotSection, menuItem);
+        setItemFlags(slotSection, menuItem);
+        setTextures(slotSection, menuItem);
 
         if (!menuItem.isDisabled())
             menuItemSet.add(menuItem);
@@ -154,10 +158,12 @@ public abstract class YAMLMenuManager extends AbstractMenuManager {
      * @param menuItem menuItem to set enchants
      */
     private void setEnchants(ConfigurationSection slot, MenuItem menuItem) {
-        if (slot.getStringList("enchants") != null) {
-            Map<Enchantment, Integer> enchantments = ItemUtil.getEnchantments(slot.getStringList("enchants"));
-            menuItem.setEnchantments(enchantments);
-        }
+        List<String> enchantsAsString = slot.getStringList("enchants");
+
+        if (enchantsAsString.isEmpty()) return;
+
+        Map<Enchantment, Integer> enchantments = ItemUtil.getEnchantments(enchantsAsString);
+        menuItem.setEnchantments(enchantments);
     }
 
     /**
@@ -170,6 +176,36 @@ public abstract class YAMLMenuManager extends AbstractMenuManager {
     private void setDisabled(ConfigurationSection slot, MenuItem menuItem) {
         boolean disabled = slot.getBoolean("disabled");
         menuItem.setDisabled(disabled);
+    }
+
+    /**
+     * Sets textures to menu item
+     *
+     * @param slot     slot section
+     * @param menuItem menuItem to set textures
+     */
+    private void setTextures(ConfigurationSection slot, MenuItem menuItem) {
+        String textures = slot.getString("textures");
+        if (textures == null) return;
+
+        menuItem.setTextures(textures);
+    }
+
+    /**
+     * Sets item's flags
+     *
+     * @param slot     slot section
+     * @param menuItem menuItem to set item flags
+     */
+    private void setItemFlags(ConfigurationSection slot, MenuItem menuItem) {
+        List<String> itemFlagsAsString = slot.getStringList("itemFlags");
+        if (itemFlagsAsString.isEmpty()) return;
+
+        List<ItemFlag> itemFlags = itemFlagsAsString.stream()
+                .map(ItemFlag::valueOf)
+                .collect(Collectors.toList());
+
+        menuItem.setItemFlags(itemFlags);
     }
 
     /**

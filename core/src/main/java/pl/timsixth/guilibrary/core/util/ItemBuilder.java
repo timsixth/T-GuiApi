@@ -3,6 +3,7 @@ package pl.timsixth.guilibrary.core.util;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -288,6 +289,15 @@ public final class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder addItemFlags(List<ItemFlag> itemFlags) {
+        ItemMeta itemMeta = is.getItemMeta();
+
+        itemFlags.forEach(itemFlag ->  itemMeta.addItemFlags(itemFlag));
+
+        is.setItemMeta(itemMeta);
+        return this;
+    }
+
     /**
      * Retrieves the itemstack from the ItemBuilder.
      *
@@ -296,5 +306,7 @@ public final class ItemBuilder {
     public ItemStack toItemStack() {
         return is;
     }
+
+
 }
 

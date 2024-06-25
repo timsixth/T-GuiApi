@@ -1,16 +1,22 @@
 package pl.timsixth.guilibrary.core.model;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import pl.timsixth.guilibrary.core.model.action.Action;
 import pl.timsixth.guilibrary.core.util.ChatUtil;
 import pl.timsixth.guilibrary.core.util.ItemBuilder;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 /**
@@ -33,6 +39,8 @@ public class MenuItem {
     private ItemStack item;
     private Menu parentMenu;
     private boolean disabled;
+    private String textures;
+    private List<ItemFlag> itemFlags;
 
     public MenuItem(int slot, Material material, String displayName, List<String> lore) {
         this.slot = slot;
@@ -94,7 +102,46 @@ public class MenuItem {
                 .setLore(ChatUtil.hexColor(replacedLore))
                 .setName(ChatUtil.hexColor(displayName))
                 .addEnchantments(getEnchantments())
+                .addItemFlags(getItemFlags())
                 .toItemStack();
+    }
+
+    /**
+     * Creates skull item from {@link MenuItem} data
+     *
+     * @return created skull item
+     */
+    public ItemStack toSkullItem() {
+        return toSkullItem(Collections.emptyMap());
+    }
+
+    /**
+     * Creates skull item from {@link MenuItem} data with placeholders
+     *
+     * @param placeholders placeholders to replace placeholders
+     * @return created skull item
+     */
+    public ItemStack toSkullItem(Map<String, String> placeholders) {
+        ItemStack item = toItemStack(placeholders);
+
+        if (item.getType() != Material.PLAYER_HEAD) return item;
+
+        SkullMeta meta = (SkullMeta) item.getItemMeta();
+
+        GameProfile profile = new GameProfile(UUID.randomUUID(), "");
+        profile.getProperties().put("textures", new Property("textures", textures));
+        Field field;
+        try {
+            field = meta.getClass().getDeclaredField("profile");
+            field.setAccessible(true);
+            field.set(meta, profile);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+            Bukkit.getLogger().severe(e.getMessage());
+        }
+
+        item.setItemMeta(meta);
+
+        return item;
     }
 
     /**
@@ -115,6 +162,25 @@ public class MenuItem {
     public List<String> getLore() {
         if (lore == null) return new ArrayList<>();
         return lore;
+    }
+
+    /**
+     * Gets List of item flags
+     *
+     * @return list of item flags
+     */
+    public List<ItemFlag> getItemFlags() {
+        if (itemFlags == null) return new ArrayList<>();
+        return itemFlags;
+    }
+
+    /**
+     * Checks that menu item is skull item
+     *
+     * @return true if menu item is skull item otherwise false
+     */
+    public boolean isSkullItem() {
+        return textures != null;
     }
 
     @Override

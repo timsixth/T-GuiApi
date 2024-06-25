@@ -63,6 +63,10 @@ public abstract class AbstractMenuManager extends Pagination {
         for (MenuItem menuItem : menu.getItems()) {
             if (menuItem.isDisabled()) continue;
 
+            if (menuItem.isSkullItem()) {
+                inv.setItem(menuItem.getSlot(), menuItem.toSkullItem(placeholders));
+                continue;
+            }
             inv.setItem(menuItem.getSlot(), menuItem.toItemStack(placeholders));
         }
 
