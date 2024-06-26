@@ -15,7 +15,14 @@ public class User implements Generable {
     private final String name;
     private final String surname;
     private final int age;
-    private final Group group;
+    private Group group;
+
+    public User(String name, String surname,int age, Group group) {
+        this.name = name;
+        this.surname = surname;
+        this.group = group;
+        this.age = age;
+    }
 
     @Override
     public MenuItem getGeneratedItem(int slot) {

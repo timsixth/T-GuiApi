@@ -124,7 +124,7 @@ public final class GuiApiPlugin extends JavaPlugin {
     private void createPagination2() {
         PaginatedMenu paginatedMenu = new PaginatedMenu(27, "paginatedMenu1", "pages1");
 
-        List<User> users = userManager.getUserList();
+        List<User> users = userManager.getUsers();
 
         paginatedMenu.setData(users);
         paginatedMenu.setItemsPerPage(10);

@@ -1,5 +1,6 @@
 package pl.timsixth.guilibrary.example.command;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,14 +15,18 @@ public class UserCommand implements CommandExecutor {
     private final UserManager userManager;
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NonNull CommandSender sender, @NonNull Command command, @NonNull String label, String[] args) {
         User user = new User("test", "123", 12, Group.ADMIN);
 
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("add")) {
-                userManager.getUserList().add(user);
+                userManager.getUsers().add(user);
             } else if (args[0].equalsIgnoreCase("remove")) {
-                userManager.getUserList().remove(user);
+                userManager.getUsers().remove(user);
+            } else if (args[0].equalsIgnoreCase("update")) {
+                User userTest = userManager.getUser("test");
+
+                userTest.setGroup(Group.MODERATOR);
             }
         }
 

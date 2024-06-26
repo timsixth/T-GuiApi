@@ -10,9 +10,16 @@ import java.util.List;
 @Getter
 public class UserManager {
 
-    private final List<User> userList = new ArrayList<>();
+    private final List<User> users = new ArrayList<>();
 
     public UserManager() {
-        userList.add(new User("12", "2", 12, Group.MODERATOR));
+        users.add(new User("12", "2", 12, Group.MODERATOR));
+    }
+
+    public User getUser(String username) {
+        return users.stream()
+                .filter(user -> user.getName().equalsIgnoreCase(username))
+                .findAny()
+                .orElse(null);
     }
 }

@@ -255,6 +255,13 @@ public class PaginatedMenu extends BaseMenu {
         return createPage(latestIndex);
     }
 
+    /**
+     * Clears all pages data
+     */
+    public void refreshPages() {
+        pages.clear();
+    }
+
     @Override
     public String toString() {
         return "PaginatedMenu{" +

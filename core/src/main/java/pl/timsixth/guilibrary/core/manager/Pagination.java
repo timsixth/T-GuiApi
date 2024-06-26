@@ -4,10 +4,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import pl.timsixth.guilibrary.core.model.BaseMenu;
-import pl.timsixth.guilibrary.core.model.Menu;
-import pl.timsixth.guilibrary.core.model.MenuItem;
-import pl.timsixth.guilibrary.core.model.UserMenus;
+import pl.timsixth.guilibrary.core.model.*;
 import pl.timsixth.guilibrary.core.model.pagination.Page;
 import pl.timsixth.guilibrary.core.model.pagination.PaginatedMenu;
 import pl.timsixth.guilibrary.core.util.ChatUtil;
@@ -29,14 +26,14 @@ public abstract class Pagination {
      * @param menus menus list to register all pages
      * @return optional of inventory
      */
-    Optional<Inventory> createPaginatedInventory(PaginatedMenu menu, Set<Menu> menus, Player player) {
+    Optional<Inventory> createPaginatedInventory(PaginatedMenu menu, Set<Menu> menus, Player player, boolean stateChanged) {
         Optional<Page> pageOptional = menu.firstPage();
 
         int staticItemsAmount = 0;
 
         if (!menu.getPages().isEmpty()) staticItemsAmount = menu.getPages().size() * menu.getStaticItems().size();
 
-        if (menu.getPages().isEmpty() || menu.getData().size() != (menu.getPagesItemCount() - staticItemsAmount)) {
+        if (menu.getPages().isEmpty() || menu.getData().size() != (menu.getPagesItemCount() - staticItemsAmount) || stateChanged) {
             refreshMenusList(menu, menus);
 
             int latestIndex = menu.generatePages();
@@ -172,21 +169,23 @@ public abstract class Pagination {
             if (!paginatedMenuOptional.isPresent()) {
                 PaginatedMenu paginatedMenu = createPaginatedMenuForPlayer(menu, userMenus);
 
-                return createPaginatedInventory(paginatedMenu, menus, player);
+                return createPaginatedInventory(paginatedMenu, menus, player, false);
             }
 
             PaginatedMenu paginatedMenu = paginatedMenuOptional.get();
 
+            paginatedMenu.getData().remove(0);
+
             userMenus.refreshPaginatedMenu(paginatedMenu, menu.getData());
 
-            return createPaginatedInventory(paginatedMenu, menus, player);
+            return createPaginatedInventory(paginatedMenu, menus, player, true);
         }
 
         UserMenus userMenus = new UserMenus(player.getUniqueId());
 
         PaginatedMenu paginatedMenu = createPaginatedMenuForPlayer(menu, userMenus);
 
-        return createPaginatedInventory(paginatedMenu, menus, player);
+        return createPaginatedInventory(paginatedMenu, menus, player, false);
     }
 
     /**
@@ -225,24 +224,5 @@ public abstract class Pagination {
         }));
 
         return pagesAsMenus;
-    }
-
-    public void refreshPaginatedMenuForPlayer(Player player, PaginatedMenu menu, Set<Menu> menus) {
-        refreshMenusList(menu, menus);
-        //menu.refreshPages();
-
-        menu.getPages().forEach(menus::remove);
-
-        Optional<UserMenus> userMenusOptional = getUserMenusByUuid(player.getUniqueId());
-
-        if (!userMenusOptional.isPresent()) return;
-
-        UserMenus userMenus = userMenusOptional.get();
-
-        Optional<PaginatedMenu> paginatedMenuOptional = userMenus.getPaginatedMenuByName(menu.getName());
-
-        if (!paginatedMenuOptional.isPresent()) return;
-
-        //userMenus.removePaginatedMenu(paginatedMenuOptional.get());
     }
 }

@@ -1,5 +1,6 @@
 package pl.timsixth.guilibrary.example.command;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,7 +27,7 @@ public class TestGuiCommand implements CommandExecutor {
     private final UserManager userManager;
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@NonNull CommandSender sender, @NonNull Command command,@NonNull String label, String[] args) {
         Player player = (Player) sender;
 
         if (args.length == 0) {
@@ -66,7 +67,7 @@ public class TestGuiCommand implements CommandExecutor {
 
                 PaginatedMenu menu = menuOptional.get();
 
-                menu.setData(userManager.getUserList());
+                menu.setData(userManager.getUsers());
 
                 menuManager.createPaginatedMenu(player, menu)
                         .ifPresent(player::openInventory);
