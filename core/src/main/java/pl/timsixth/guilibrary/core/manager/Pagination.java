@@ -29,7 +29,7 @@ public abstract class Pagination {
      * @param menus menus list to register all pages
      * @return optional of inventory
      */
-    Optional<Inventory> createPaginatedInventory(PaginatedMenu menu, Set<Menu> menus) {
+    Optional<Inventory> createPaginatedInventory(PaginatedMenu menu, Set<Menu> menus, Player player) {
         Optional<Page> pageOptional = menu.firstPage();
 
         int staticItemsAmount = 0;
@@ -50,6 +50,14 @@ public abstract class Pagination {
             generateExtraPage(menu, latestIndex, nextIndex);
 
             createInventory(menu);
+
+            if (player != null) {
+                for (Page page : menu.getPages()) {
+                    if (page.getPlayerUUID() != null) continue;
+
+                    page.setPlayerUUID(player.getUniqueId());
+                }
+            }
 
             menus.addAll(menu.getPages());
 
@@ -160,25 +168,25 @@ public abstract class Pagination {
         if (userMenusOptional.isPresent()) {
             UserMenus userMenus = userMenusOptional.get();
 
-            Optional<PaginatedMenu> paginatedMenuoOptional = userMenus.getPaginatedMenuByName(menu.getName());
-            if (!paginatedMenuoOptional.isPresent()) {
+            Optional<PaginatedMenu> paginatedMenuOptional = userMenus.getPaginatedMenuByName(menu.getName());
+            if (!paginatedMenuOptional.isPresent()) {
                 PaginatedMenu paginatedMenu = createPaginatedMenuForPlayer(menu, userMenus);
 
-                return createPaginatedInventory(paginatedMenu, menus);
+                return createPaginatedInventory(paginatedMenu, menus, player);
             }
 
-            PaginatedMenu paginatedMenu = paginatedMenuoOptional.get();
+            PaginatedMenu paginatedMenu = paginatedMenuOptional.get();
 
             userMenus.refreshPaginatedMenu(paginatedMenu, menu.getData());
 
-            return createPaginatedInventory(paginatedMenu, menus);
+            return createPaginatedInventory(paginatedMenu, menus, player);
         }
 
         UserMenus userMenus = new UserMenus(player.getUniqueId());
 
         PaginatedMenu paginatedMenu = createPaginatedMenuForPlayer(menu, userMenus);
 
-        return createPaginatedInventory(paginatedMenu, menus);
+        return createPaginatedInventory(paginatedMenu, menus, player);
     }
 
     /**
@@ -217,5 +225,24 @@ public abstract class Pagination {
         }));
 
         return pagesAsMenus;
+    }
+
+    public void refreshPaginatedMenuForPlayer(Player player, PaginatedMenu menu, Set<Menu> menus) {
+        refreshMenusList(menu, menus);
+        //menu.refreshPages();
+
+        menu.getPages().forEach(menus::remove);
+
+        Optional<UserMenus> userMenusOptional = getUserMenusByUuid(player.getUniqueId());
+
+        if (!userMenusOptional.isPresent()) return;
+
+        UserMenus userMenus = userMenusOptional.get();
+
+        Optional<PaginatedMenu> paginatedMenuOptional = userMenus.getPaginatedMenuByName(menu.getName());
+
+        if (!paginatedMenuOptional.isPresent()) return;
+
+        //userMenus.removePaginatedMenu(paginatedMenuOptional.get());
     }
 }

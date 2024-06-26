@@ -80,7 +80,7 @@ public abstract class AbstractMenuManager extends Pagination {
      * @return generated inventory
      */
     public Optional<Inventory> createPaginatedMenu(PaginatedMenu menu) {
-        return super.createPaginatedInventory(menu, menus);
+        return super.createPaginatedInventory(menu, menus, null);
     }
 
     /**
