@@ -20,7 +20,6 @@ import pl.timsixth.guilibrary.example.manager.UserManager;
 import pl.timsixth.guilibrary.example.manager.UserRandomizer;
 import pl.timsixth.guilibrary.example.model.Group;
 import pl.timsixth.guilibrary.example.model.User;
-import pl.timsixth.guilibrary.processes.ProcessesModule;
 
 import java.io.File;
 import java.util.*;
@@ -29,7 +28,8 @@ import java.util.*;
 public final class GuiApiPlugin extends JavaPlugin {
 
     private YAMLMenuManager menuManager;
-    UserManager userManager;
+    private UserManager userManager;
+    private GUIApi guiApi;
 
     public GuiApiPlugin() {
     }
@@ -46,7 +46,7 @@ public final class GuiApiPlugin extends JavaPlugin {
         instance = this;
         ConfigFile configFile = new ConfigFile(this);
 
-        GUIApi guiApi = new GUIApi(this);
+        guiApi = new GUIApi(this);
 
         menuManager = new MenuManager(guiApi.getActionRegistration(), configFile);
 
@@ -54,8 +54,6 @@ public final class GuiApiPlugin extends JavaPlugin {
 
         guiApi.registerDefaultActions();
         guiApi.getActionRegistration().register(new ChooseUserGroupAction(), new OpenPaginatedMenuAction());
-
-        guiApi.getModuleManager().registerModule(new ProcessesModule(this));
 
         guiApi.registerMenuListener();
 
@@ -69,8 +67,6 @@ public final class GuiApiPlugin extends JavaPlugin {
         createChooseUserGroup();
         createPagination();
         createPagination2();
-
-
     }
 
     private void createChooseUserGroup() {

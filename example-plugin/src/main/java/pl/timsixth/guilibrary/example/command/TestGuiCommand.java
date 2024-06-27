@@ -27,7 +27,7 @@ public class TestGuiCommand implements CommandExecutor {
     private final UserManager userManager;
 
     @Override
-    public boolean onCommand(@NonNull CommandSender sender, @NonNull Command command,@NonNull String label, String[] args) {
+    public boolean onCommand(@NonNull CommandSender sender, @NonNull Command command, @NonNull String label, String[] args) {
         Player player = (Player) sender;
 
         if (args.length == 0) {
