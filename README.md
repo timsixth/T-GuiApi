@@ -3,7 +3,7 @@
 Gui is generating from YAML files.
 This library is using in my plugins.
 
-JavaDocs: https://timsixth.pl/javadocs/gui_api/2.5.0/
+JavaDocs: https://timsixth.pl/javadocs/gui_api/2.6.0/
 
 ## Examples
 https://github.com/timsixth/T-GuiApi/tree/main/example-plugin/src/main/java/pl/timsixth/guilibrary/example<br>
@@ -14,6 +14,10 @@ https://github.com/timsixth/T-GuiApi/blob/main/example-plugin/src/main/resources
 * Process system (You can open GUI, next open another GUI, your data haven't gone , you can transfer them to next GUI. This system can be used in plugin which you need configuration in GUI for user friendly)
 
 ## Getting started
+
+{VERSION} - current version form GitHub releases section:
+
+https://github.com/timsixth/MinigameAPI/releases
 
 Maven
 ```xml
