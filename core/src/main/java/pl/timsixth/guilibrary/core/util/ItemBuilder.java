@@ -1,5 +1,8 @@
 package pl.timsixth.guilibrary.core.util;
 
+import com.mojang.authlib.GameProfile;
+import com.mojang.authlib.properties.Property;
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -9,10 +12,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.Field;
+import java.util.*;
 
 /**
  * Easily create itemstacks, without messing your hands.
@@ -131,7 +132,7 @@ public final class ItemBuilder {
             im.setOwner(owner);
             is.setItemMeta(im);
         } catch (ClassCastException expected) {
-            expected.printStackTrace();
+            Bukkit.getLogger().severe(expected.getMessage());
         }
         return this;
     }
@@ -284,7 +285,7 @@ public final class ItemBuilder {
             im.setColor(color);
             is.setItemMeta(im);
         } catch (ClassCastException expected) {
-            expected.printStackTrace();
+            Bukkit.getLogger().severe(expected.getMessage());
         }
         return this;
     }
@@ -292,9 +293,27 @@ public final class ItemBuilder {
     public ItemBuilder addItemFlags(List<ItemFlag> itemFlags) {
         ItemMeta itemMeta = is.getItemMeta();
 
-        itemFlags.forEach(itemFlag ->  itemMeta.addItemFlags(itemFlag));
+        itemFlags.forEach(itemFlag -> itemMeta.addItemFlags(itemFlag));
 
         is.setItemMeta(itemMeta);
+        return this;
+    }
+
+    public ItemBuilder setTextures(String textures) {
+        SkullMeta meta = (SkullMeta) is.getItemMeta();
+
+        GameProfile profile = new GameProfile(UUID.randomUUID(), "");
+        profile.getProperties().put("textures", new Property("textures", textures));
+        Field field;
+        try {
+            field = meta.getClass().getDeclaredField("profile");
+            field.setAccessible(true);
+            field.set(meta, profile);
+        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
+            Bukkit.getLogger().severe(e.getMessage());
+        }
+
+        is.setItemMeta(meta);
         return this;
     }
 

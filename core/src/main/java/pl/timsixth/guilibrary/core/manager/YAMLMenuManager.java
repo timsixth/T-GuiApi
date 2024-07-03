@@ -94,6 +94,7 @@ public abstract class YAMLMenuManager extends AbstractMenuManager {
         setDisabled(slotSection, menuItem);
         setItemFlags(slotSection, menuItem);
         setTextures(slotSection, menuItem);
+        setLocalizedName(slotSection, menuItem);
 
         if (!menuItem.isDisabled())
             menuItemSet.add(menuItem);
@@ -206,6 +207,19 @@ public abstract class YAMLMenuManager extends AbstractMenuManager {
                 .collect(Collectors.toList());
 
         menuItem.setItemFlags(itemFlags);
+    }
+
+    /**
+     * Sets localized name to menu item
+     *
+     * @param slot     slot section
+     * @param menuItem menuItem to set localized name
+     */
+    private void setLocalizedName(ConfigurationSection slot, MenuItem menuItem) {
+        String localizedName = slot.getString("localizedName");
+        if (localizedName == null) return;
+
+        menuItem.setLocalizedName(localizedName);
     }
 
     /**

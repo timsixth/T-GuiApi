@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -33,6 +34,19 @@ public class Menu extends BaseMenu {
         this.emptySlotFilling = menuBuilder.emptySlotFilling;
         this.items = menuBuilder.items;
 
+    }
+
+    /**
+     * Gets menu item by localized name
+     *
+     * @param localizedName localized name to get menu item
+     * @return optional of menu item
+     */
+    public Optional<MenuItem> getMenuItem(String localizedName) {
+        return items.stream()
+                .filter(menuItem -> menuItem.getLocalizedName() != null)
+                .filter(menuItem -> menuItem.getLocalizedName().equalsIgnoreCase(localizedName))
+                .findAny();
     }
 
     public Menu(int size, String name, String displayName) {
