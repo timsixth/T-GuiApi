@@ -31,15 +31,25 @@ public class InventoryClickListener implements Listener {
 
                 Player player = (Player) event.getWhoClicked();
 
+                if (page.getPlayerUUID() == null) {
+                    if (event.getView().getTitle().equalsIgnoreCase(ChatUtil.chatColor(menu.getDisplayName()))) {
+                        runAction(event, menu);
+                        event.setCancelled(true);
+                    }
+                    continue;
+                }
+
                 if (page.getPlayerUUID().equals(player.getUniqueId()) && event.getView().getTitle().equalsIgnoreCase(ChatUtil.chatColor(menu.getDisplayName()))) {
                     runAction(event, menu);
+                    event.setCancelled(true);
                 }
-            } else {
-                if (event.getView().getTitle().equalsIgnoreCase(ChatUtil.chatColor(menu.getDisplayName()))) {
-                    runAction(event, menu);
-                }
+                continue;
             }
-            event.setCancelled(true);
+
+            if (event.getView().getTitle().equalsIgnoreCase(ChatUtil.chatColor(menu.getDisplayName()))) {
+                runAction(event, menu);
+                event.setCancelled(true);
+            }
         }
     }
 
