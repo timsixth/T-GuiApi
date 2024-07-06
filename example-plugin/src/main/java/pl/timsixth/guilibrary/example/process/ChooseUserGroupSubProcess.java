@@ -18,11 +18,6 @@ public class ChooseUserGroupSubProcess extends AbstractSubGuiProcess {
     }
 
     @Override
-    public String getInventoryDisplayName() {
-        return menu.getDisplayName();
-    }
-
-    @Override
     public Inventory getInventory() {
         return menuManager.createMenu(menu);
     }

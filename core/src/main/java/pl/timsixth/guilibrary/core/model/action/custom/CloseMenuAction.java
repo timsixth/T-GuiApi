@@ -17,6 +17,11 @@ public class CloseMenuAction extends AbstractAction implements ClickAction {
 
     @Override
     public void handleClickEvent(InventoryClickEvent event, MenuItem menuItem) {
+        if (event.isShiftClick()) {
+            event.setCancelled(true);
+            return;
+        }
+
         Player player = (Player) event.getWhoClicked();
 
         player.closeInventory();

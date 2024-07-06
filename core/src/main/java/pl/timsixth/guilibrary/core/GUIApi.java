@@ -12,7 +12,6 @@ import pl.timsixth.guilibrary.core.manager.YAMLMenuManager;
 import pl.timsixth.guilibrary.core.manager.registration.ActionRegistration;
 import pl.timsixth.guilibrary.core.manager.registration.ActionRegistrationImpl;
 import pl.timsixth.guilibrary.core.model.action.custom.*;
-import pl.timsixth.guilibrary.core.module.ModuleManager;
 
 /**
  * Class to initialize GUI library
@@ -26,8 +25,6 @@ public final class GUIApi {
     private final Plugin plugin;
     private AbstractMenuManager menuManager;
     private ActionRegistration actionRegistration;
-    @Setter(AccessLevel.NONE)
-    private ModuleManager moduleManager;
 
     /**
      * In this constructor GUIApi initializes.
@@ -41,7 +38,6 @@ public final class GUIApi {
         this.plugin = plugin;
         this.actionRegistration = new ActionRegistrationImpl();
         this.menuManager = new InMemoryMenuManager(actionRegistration);
-        this.moduleManager = new ModuleManager();
     }
 
     /**

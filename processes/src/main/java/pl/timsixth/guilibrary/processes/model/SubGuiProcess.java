@@ -63,13 +63,4 @@ public interface SubGuiProcess extends GuiProcess {
      * @param previousProcess previous process
      */
     void setNextProcess(SubGuiProcess previousProcess);
-
-    /**
-     * Gets inventory display name.<br>
-     *
-     * @return inventory display name.
-     * @deprecated
-     */
-    @Deprecated
-    String getInventoryDisplayName();
 }

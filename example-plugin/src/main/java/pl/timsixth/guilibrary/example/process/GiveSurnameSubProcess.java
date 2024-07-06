@@ -15,7 +15,6 @@ import java.util.Collections;
 public class GiveSurnameSubProcess extends AbstractSubGuiProcess implements WriteableInput{
 
     private final GuiApiPlugin guiApiPlugin;
-    private final String GUI_NAME = "&a&lType user surname";
 
     public GiveSurnameSubProcess(GuiApiPlugin guiApiPlugin) {
         super("GIVE_SURNAME");
@@ -23,16 +22,11 @@ public class GiveSurnameSubProcess extends AbstractSubGuiProcess implements Writ
     }
 
     @Override
-    public String getInventoryDisplayName() {
-        return GUI_NAME;
-    }
-
-    @Override
     public AnvilGUI.Builder getAnvilInput() {
         return new AnvilGUI.Builder()
                 .itemLeft(new ItemStack(Material.PAPER))
                 .itemOutput(new ItemStack(Material.PAPER))
-                .title(ChatUtil.chatColor(GUI_NAME))
+                .title(ChatUtil.chatColor("&a&lType user surname"))
                 .onClick((slot, stateSnapshot) -> {
                     if (slot != AnvilGUI.Slot.OUTPUT) {
                         return Collections.emptyList();
