@@ -1,6 +1,6 @@
 name: T-GuiApi
 main: pl.timsixth.guilibrary.example.GuiApiPlugin
-version: '2.8.0'
+version: '2.8.1'
 author: timsixth
 api-version: 1.13
 commands:
