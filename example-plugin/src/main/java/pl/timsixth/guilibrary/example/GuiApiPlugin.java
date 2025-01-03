@@ -12,6 +12,7 @@ import pl.timsixth.guilibrary.core.model.MenuItem;
 import pl.timsixth.guilibrary.core.model.pagination.PaginatedMenu;
 import pl.timsixth.guilibrary.example.action.ChooseUserGroupAction;
 import pl.timsixth.guilibrary.example.action.OpenPaginatedMenuAction;
+import pl.timsixth.guilibrary.example.action.DependencyInjectionAction;
 import pl.timsixth.guilibrary.example.command.TestGuiCommand;
 import pl.timsixth.guilibrary.example.command.UserCommand;
 import pl.timsixth.guilibrary.example.config.ConfigFile;
@@ -53,7 +54,7 @@ public final class GuiApiPlugin extends JavaPlugin {
         guiApi.setMenuManager(menuManager);
 
         guiApi.registerDefaultActions();
-        guiApi.getActionRegistration().register(new ChooseUserGroupAction(), new OpenPaginatedMenuAction());
+        guiApi.getActionRegistration().register(new ChooseUserGroupAction(), new OpenPaginatedMenuAction(), new DependencyInjectionAction("test123"));
 
         guiApi.registerMenuListener();
 

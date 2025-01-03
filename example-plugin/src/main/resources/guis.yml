@@ -48,6 +48,15 @@ guis:
           type: 'NONE'
           args:
             - ''
+      3:
+        material: APPLE
+        displayname: '&cTest dependency injection action'
+        lore:
+          - 'Price {PRICE}'
+        click_action:
+          type: 'DEPENDENCY_INJECTION'
+          args:
+            - ''
   test2:
     displayname: '&a&ltest2'
     size: 54

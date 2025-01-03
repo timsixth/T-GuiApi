@@ -18,6 +18,10 @@ import pl.timsixth.guilibrary.core.model.action.custom.NoneClickAction;
 import pl.timsixth.guilibrary.core.util.ItemBuilder;
 import pl.timsixth.guilibrary.core.util.ItemUtil;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -129,8 +133,29 @@ public abstract class YAMLMenuManager extends AbstractMenuManager {
 
             ClickAction clickAction;
             try {
-                clickAction = action.getClass().newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
+                List<Field> fields = getAllFinalFields(action);
+
+                if (fields.isEmpty()) {
+                    clickAction = action.getClass().newInstance();
+                } else {
+                    Class<?>[] types = fields.stream()
+                            .map(Field::getType)
+                            .toArray(Class<?>[]::new);
+
+                    Object[] values = fields.stream().map(field -> {
+                                try {
+                                    return field.get(action);
+                                } catch (IllegalAccessException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            })
+                            .toArray(Object[]::new);
+
+                    clickAction = action.getClass().getConstructor(types).newInstance(values);
+                }
+
+            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                     NoSuchMethodException e) {
                 throw new RuntimeException(e);
             }
 
@@ -138,6 +163,32 @@ public abstract class YAMLMenuManager extends AbstractMenuManager {
 
             menuItem.setAction(clickAction);
         }
+    }
+
+    private List<Field> getAllFinalFields(Action action) throws IllegalAccessException {
+        List<Field> fields = new ArrayList<>();
+
+        Field[] declaredFields = action.getClass().getDeclaredFields();
+        Constructor<?>[] constructors = action.getClass().getConstructors();
+
+        for (Field field : declaredFields) {
+            field.setAccessible(true);
+
+            if (Modifier.isFinal(field.getModifiers())) {
+
+                for (Constructor<?> constructor : constructors) {
+                    Class<?>[] parameterTypes = constructor.getParameterTypes();
+
+                    for (Class<?> parameterType : parameterTypes) {
+                        if (field.getType().equals(parameterType)) {
+                            fields.add(field);
+                        }
+                    }
+                }
+            }
+        }
+
+        return fields;
     }
 
     /**

@@ -103,13 +103,16 @@ public final class ProcessRunner {
     }
 
     /**
-     * Ends process for player
+     * Ends process for player, ends all subprocesses
      *
      * @param player         player to end process
      * @param mainGuiProcess process to end
      */
     public static void endProcess(Player player, MainGuiProcess mainGuiProcess) {
         mainGuiProcess.setEnded(true);
+
+        mainGuiProcess.getGuiProcesses().forEach(subGuiProcess -> subGuiProcess.setEnded(true));
+
         processes.remove(player.getUniqueId());
     }
 
